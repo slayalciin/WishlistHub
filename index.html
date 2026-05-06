@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist Hub - AI Destekli Sosyal İstek Listesi Platformu</title>
+    <meta name="description" content="Wishlist Hub ile farklı platformlardan beğendiğiniz ürünleri tek yerde toplayın, paylaşın ve AI destekli kişisel öneriler alın.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <img src="assets/logo.png" alt="Wishlist Hub Logo" style="height: 60px; margin-right: 15px;">
+                <h1>Wishlist Hub</h1>
+            </div>
+            <div class="splash-loader">
+                <div class="loader-bar"></div>
+            </div>
+            <p class="splash-tagline">Hayallerini Listele, Paylaş, Keşfet</p>
+        </div>
+    </div>
+
+    <!-- Auth Modal (Full Screen Layout) -->
+    <div id="auth-modal" class="modal-overlay auth-fullscreen" style="display:none;">
+        <div class="auth-layout">
+            <button class="modal-close auth-close-btn" onclick="closeAuthModal()"><i class="fas fa-times"></i></button>
+            
+            <div class="auth-images" style="display: flex; justify-content: center; align-items: center; padding: var(--space-2xl) var(--space-xl) 0 var(--space-xl); height: auto;">
+                <img src="assets/auth_models.jpg" alt="Fashion Models" class="auth-img" style="width: 100%; max-width: 800px; max-height: 45vh; height: auto; object-fit: contain; border-radius: 12px; box-shadow: var(--shadow-md);">
+            </div>
+
+            <div class="auth-content-area">
+                <div class="auth-intro">
+                    <img src="assets/logo.png" alt="Logo" class="auth-intro-logo">
+                    <p class="auth-intro-text">
+                        Wishlist Hub'a giriş yaparak, kişiselleştirilmiş stil önerileri ve kombinasyonlarla alışveriş deneyiminizi bir üst seviyeye taşıyın. Gardırobunuzu dijital ortamda düzenleyin, favori ürünlerinizi takip edin ve yeni keşifler yaparak tarzınızı keşfedin. Tüm özelliklere erişmek için hemen oturum açın ve stilinize dair en iyi deneyimi yaşayın!
+                    </p>
+                </div>
+
+                <div class="auth-forms-container">
+                    <!-- Tabs -->
+                    <div class="auth-minimal-tabs">
+                        <button class="auth-tab active" data-tab="login" onclick="switchAuthTab('login')">OTURUM AÇ</button>
+                        <button class="auth-tab" data-tab="register" onclick="switchAuthTab('register')">KAYIT OL</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div id="login-form" class="auth-form-minimal">
+                        <div class="form-group-minimal">
+                            <input type="email" id="login-email" placeholder="E-POSTA" class="input-minimal">
+                        </div>
+                        <div class="form-group-minimal">
+                            <input type="password" id="login-password" placeholder="PAROLA" class="input-minimal">
+                        </div>
+                        <div class="auth-forgot-link">
+                            <a href="#">Şifrenizi mi unuttunuz ?</a>
+                        </div>
+                        <div style="text-align: center; margin-top: var(--space-xl);">
+                            <button class="btn-minimal-outline" onclick="handleLogin()">OTURUM AÇ</button>
+                        </div>
+                    </div>
+
+                    <!-- Register Form -->
+                    <div id="register-form" class="auth-form-minimal" style="display:none;">
+                        <div class="form-group-minimal">
+                            <input type="text" id="reg-name" placeholder="AD SOYAD" class="input-minimal">
+                        </div>
+                        <div class="form-group-minimal">
+                            <input type="email" id="reg-email" placeholder="E-POSTA" class="input-minimal">
+                        </div>
+                        <div class="form-group-minimal">
+                            <input type="password" id="reg-password" placeholder="PAROLA" class="input-minimal">
+                        </div>
+                        <div style="text-align: center; margin-top: var(--space-xl);">
+                            <button class="btn-minimal-outline" onclick="handleRegister()">KAYIT OL</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="auth-footer">
+                    <a href="#">Yardım Merkezi</a>
+                    <div class="accessibility-icon"><i class="fas fa-universal-access"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="main-nav" class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo" onclick="navigateTo('home')">
+                <img src="assets/logo.png" alt="Logo" style="height: 32px; margin-right: 8px;">
+                <span class="logo-text">Wishlist<span class="logo-highlight">Hub</span></span>
+            </div>
+            <div class="nav-links" id="nav-links">
+                <a href="#" class="nav-link active" data-page="home" onclick="navigateTo('home')">
+                    <i class="fas fa-home"></i><span>Ana Sayfa</span>
+                </a>
+                <a href="#" class="nav-link" data-page="wishlist" onclick="navigateTo('wishlist')">
+                    <i class="fas fa-heart"></i><span>Wishlist</span>
+                </a>
+                <a href="#" class="nav-link" data-page="trends" onclick="navigateTo('trends')">
+                    <i class="fas fa-fire"></i><span>Trendler</span>
+                </a>
+                <a href="#" class="nav-link" data-page="inspiration" onclick="navigateTo('inspiration')">
+                    <i class="fas fa-lightbulb"></i><span>İlham Köşesi</span>
+                </a>
+            </div>
+            <div class="nav-actions">
+                <button class="nav-action-btn" id="search-btn" onclick="toggleSearch()">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="nav-action-btn" id="notif-btn" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span class="notif-badge">3</span>
+                </button>
+                <div class="nav-user" id="nav-user" onclick="navigateTo('profile')" style="display:none;">
+                    <div class="user-avatar-small">
+                        <img src="" alt="avatar" id="nav-avatar">
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-sm" id="nav-auth-btn" onclick="openAuthModal()">
+                    <i class="fas fa-sign-in-alt"></i> Giriş
+                </button>
+                <button class="nav-hamburger" id="hamburger-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Search Overlay -->
+        <div id="search-overlay" class="search-overlay" style="display:none;">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Ürün, kullanıcı veya liste ara..." id="global-search" oninput="handleGlobalSearch(this.value)">
+                <button onclick="toggleSearch()"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="search-results" class="search-results"></div>
+        </div>
+        <!-- Notifications Panel -->
+        <div id="notif-panel" class="notif-panel" style="display:none;">
+            <div class="notif-header">
+                <h3>Bildirimler</h3>
+                <button onclick="clearNotifications()">Tümünü okundu yap</button>
+            </div>
+            <div id="notif-list" class="notif-list"></div>
+        </div>
+    </nav>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-nav" id="mobile-nav">
+        <a href="#" class="mobile-nav-item active" data-page="home" onclick="navigateTo('home')">
+            <i class="fas fa-home"></i>
+            <span>Ana Sayfa</span>
+        </a>
+        <a href="#" class="mobile-nav-item" data-page="wishlist" onclick="navigateTo('wishlist')">
+            <i class="fas fa-heart"></i>
+            <span>Wishlist</span>
+        </a>
+        <a href="#" class="mobile-nav-item" data-page="trends" onclick="navigateTo('trends')">
+            <i class="fas fa-fire"></i>
+            <span>Trendler</span>
+        </a>
+        <a href="#" class="mobile-nav-item" data-page="inspiration" onclick="navigateTo('inspiration')">
+            <i class="fas fa-lightbulb"></i>
+            <span>İlham</span>
+        </a>
+        <a href="#" class="mobile-nav-item" data-page="profile" onclick="navigateTo('profile')">
+            <i class="fas fa-user"></i>
+            <span>Profil</span>
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="app-content" class="app-content">
+        <!-- Pages will be rendered here dynamically -->
+    </main>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/ai-engine.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/pages/home.js"></script>
+    <script src="js/pages/wishlist.js"></script>
+    <script src="js/pages/trends.js"></script>
+    <script src="js/pages/inspiration.js"></script>
+    <script src="js/pages/profile.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
