@@ -1048,6 +1048,18 @@
 @media (max-width: 1024px) {
     .tryout-container {
         grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+    }
+    .tryout-canvas {
+        order: 1;
+        min-height: 400px;
+    }
+    .tryout-panel:nth-child(1) {
+        order: 2;
+    }
+    .tryout-panel:nth-child(3) {
+        order: 3;
     }
 }
 
@@ -1154,10 +1166,26 @@
 @media (max-width: 768px) {
     .combo-builder {
         grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+    }
+    .combo-preview-area {
+        order: 1;
+    }
+    .combo-wardrobe {
+        order: 2;
     }
 
     .wardrobe-grid {
         grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Make the wardrobe slots lay out horizontally on mobile to save vertical space */
+    .combo-slots {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: none;
+        width: 100%;
+        max-width: 500px;
     }
 }
 
@@ -1459,5 +1487,33 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
+    }
+    .auth-images {
+        display: none !important;
+    }
+    .auth-content-area {
+        padding: var(--space-xl) var(--space-md) !important;
+    }
+}
+
+/* ── Creation Hub Container Responsive ──────────────── */
+.creation-hub-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-2xl);
+    width: 90%;
+    max-width: 900px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: var(--space-2xl);
+    position: relative;
+    box-shadow: var(--shadow-2xl);
+}
+
+@media (max-width: 768px) {
+    .creation-hub-container {
+        padding: var(--space-lg);
+        width: 95%;
+        border-radius: var(--radius-xl);
     }
 }

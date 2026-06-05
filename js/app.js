@@ -17,6 +17,14 @@ function applyTheme(theme) {
     if (btn) {
         btn.innerHTML = theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     }
+    const mobileThemeIcon = document.getElementById('mobile-theme-icon');
+    const mobileThemeText = document.getElementById('mobile-theme-text');
+    if (mobileThemeIcon) {
+        mobileThemeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+    if (mobileThemeText) {
+        mobileThemeText.textContent = theme === 'dark' ? (store.state.language === 'tr' ? 'Açık' : 'Light') : (store.state.language === 'tr' ? 'Koyu' : 'Dark');
+    }
 }
 
 function applyLanguage(lang) {
@@ -25,9 +33,19 @@ function applyLanguage(lang) {
     if (btnText) {
         btnText.textContent = lang === 'tr' ? 'EN' : 'TR';
     }
+    const mobileLangText = document.getElementById('mobile-lang-text');
+    if (mobileLangText) {
+        mobileLangText.textContent = lang === 'tr' ? 'EN' : 'TR';
+    }
     const navAuthBtn = document.getElementById('nav-auth-btn');
     if (navAuthBtn) {
         navAuthBtn.innerHTML = `<i class="fas fa-sign-in-alt"></i> <span data-i18n="nav_login">${t('nav_login')}</span>`;
+    }
+    // Update theme text translation in mobile menu
+    const mobileThemeText = document.getElementById('mobile-theme-text');
+    if (mobileThemeText) {
+        const theme = store.state.theme;
+        mobileThemeText.textContent = theme === 'dark' ? (lang === 'tr' ? 'Açık' : 'Light') : (lang === 'tr' ? 'Koyu' : 'Dark');
     }
 }
 
@@ -235,14 +253,14 @@ function handleLogout() {
 function updateNavForAuth(loggedIn) {
     const navUser = document.getElementById('nav-user');
     const navAuthBtn = document.getElementById('nav-auth-btn');
-    const navAvatar = document.getElementById('nav-avatar');
+    const mobileAuthContainer = document.getElementById('mobile-auth-container');
 
     if (loggedIn && store.state.currentUser) {
         navUser.style.display = 'block';
         navAuthBtn.style.display = 'none';
         
         const user = store.state.currentUser;
-        navUser.innerHTML = `
+        const userAvatarHtml = `
             <div class="user-avatar-small" style="overflow:hidden;">
                 <div style="width:100%; height:100%; background: var(--primary); display:flex; align-items:center; justify-content:center; font-size: 1.1rem;">
                     ${user.avatar ? 
@@ -252,9 +270,35 @@ function updateNavForAuth(loggedIn) {
                 </div>
             </div>
         `;
+        navUser.innerHTML = userAvatarHtml;
+
+        if (mobileAuthContainer) {
+            mobileAuthContainer.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                    <div style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer;" onclick="navigateTo('profile')">
+                        ${userAvatarHtml}
+                        <div style="text-align: left;">
+                            <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary);">${user.name}</div>
+                            <div style="font-size: 0.7rem; color: var(--text-muted);">${user.username}</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-ghost btn-sm" onclick="handleLogout(); event.stopPropagation();" style="color: var(--accent-rose); padding: 6px 12px; font-weight: 600;">
+                        <i class="fas fa-sign-out-alt"></i> ${t('pr_logout') || 'Çıkış'}
+                    </button>
+                </div>
+            `;
+        }
     } else {
         navUser.style.display = 'none';
         navAuthBtn.style.display = 'flex';
+
+        if (mobileAuthContainer) {
+            mobileAuthContainer.innerHTML = `
+                <button class="btn btn-primary btn-full btn-sm" onclick="openAuthModal(); event.stopPropagation();" style="border-radius: var(--radius-full); padding: 8px var(--space-lg); font-weight: 700; width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> <span data-i18n="nav_login">${t('nav_login')}</span>
+                </button>
+            `;
+        }
     }
 }
 
@@ -566,6 +610,8 @@ window.addEventListener('resize', () => {
         links.style.backdropFilter = '';
         links.style.padding = '';
         links.style.borderBottom = '';
+    } else {
+        links.style.display = 'none';
     }
 });
 
@@ -895,6 +941,11 @@ function renderTempWishlistProducts() {
             <div style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.85rem;">
                 <strong>${p.brand}</strong> - ${p.name}
             </div>
+            <!-- Move buttons (for mobile fallback) -->
+            <div class="reorder-buttons" style="display: flex; gap: 4px; margin-right: 8px;">
+                <button onclick="event.stopPropagation(); moveTempWishlistProduct('${p.id}', -1)" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; padding: 4px;"><i class="fas fa-chevron-up"></i></button>
+                <button onclick="event.stopPropagation(); moveTempWishlistProduct('${p.id}', 1)" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; padding: 4px;"><i class="fas fa-chevron-down"></i></button>
+            </div>
             <button onclick="event.stopPropagation(); removeTempWishlistProduct('${p.id}')" style="background:none; border:none; color:var(--accent-rose); cursor:pointer;"><i class="fas fa-trash"></i></button>
         </div>
     `).join('');
@@ -907,6 +958,19 @@ function removeTempWishlistProduct(id) {
     renderTempWishlistProducts();
 }
 window.removeTempWishlistProduct = removeTempWishlistProduct;
+
+function moveTempWishlistProduct(id, direction) {
+    const idx = tempWishlistProducts.findIndex(p => p.id === id);
+    if (idx === -1) return;
+    const targetIdx = idx + direction;
+    if (targetIdx < 0 || targetIdx >= tempWishlistProducts.length) return;
+    // Swap
+    const temp = tempWishlistProducts[idx];
+    tempWishlistProducts[idx] = tempWishlistProducts[targetIdx];
+    tempWishlistProducts[targetIdx] = temp;
+    renderTempWishlistProducts();
+}
+window.moveTempWishlistProduct = moveTempWishlistProduct;
 
 function setupDragAndDropSort() {
     const list = document.getElementById('ch-wishlist-sortable-list');
@@ -1099,6 +1163,7 @@ function setupItemInteractivity(el, item) {
 
     const resizeHandle = el.querySelector('.resize-handle');
 
+    // Mouse events for drag
     el.addEventListener('mousedown', (e) => {
         if (e.target === resizeHandle || e.target.closest('.delete-handle')) {
             return;
@@ -1121,6 +1186,29 @@ function setupItemInteractivity(el, item) {
         e.preventDefault();
     });
 
+    // Touch events for drag
+    el.addEventListener('touchstart', (e) => {
+        if (e.target === resizeHandle || e.target.closest('.delete-handle')) {
+            return;
+        }
+        isDragging = true;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        startLeft = item.left;
+        startTop = item.top;
+        
+        tempMoodboardItems.forEach(it => {
+            if (it.id === item.id) {
+                it.zIndex = tempMoodboardItems.length + 5;
+            } else if (it.zIndex > item.zIndex) {
+                it.zIndex--;
+            }
+        });
+        el.style.zIndex = item.zIndex;
+    }, { passive: true });
+
+    // Mouse events for resize
     resizeHandle.addEventListener('mousedown', (e) => {
         isResizing = true;
         startX = e.clientX;
@@ -1129,6 +1217,16 @@ function setupItemInteractivity(el, item) {
         e.stopPropagation();
     });
 
+    // Touch events for resize
+    resizeHandle.addEventListener('touchstart', (e) => {
+        isResizing = true;
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startWidth = item.width;
+        e.stopPropagation();
+    }, { passive: true });
+
+    // Global move (mouse & touch)
     document.addEventListener('mousemove', (e) => {
         if (isDragging) {
             const dx = e.clientX - startX;
@@ -1144,7 +1242,32 @@ function setupItemInteractivity(el, item) {
         }
     });
 
+    document.addEventListener('touchmove', (e) => {
+        if (isDragging) {
+            const touch = e.touches[0];
+            const dx = touch.clientX - startX;
+            const dy = touch.clientY - startY;
+            item.left = Math.max(0, startLeft + dx);
+            item.top = Math.max(0, startTop + dy);
+            el.style.left = item.left + 'px';
+            el.style.top = item.top + 'px';
+            e.preventDefault(); // Prevent scrolling while dragging item
+        } else if (isResizing) {
+            const touch = e.touches[0];
+            const dx = touch.clientX - startX;
+            item.width = Math.max(40, startWidth + dx);
+            el.style.width = item.width + 'px';
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // Global stop drag/resize
     document.addEventListener('mouseup', () => {
+        isDragging = false;
+        isResizing = false;
+    });
+
+    document.addEventListener('touchend', () => {
         isDragging = false;
         isResizing = false;
     });

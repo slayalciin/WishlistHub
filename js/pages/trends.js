@@ -59,12 +59,12 @@ function renderTrendsPage() {
     return `
         <section class="section page-enter">
             <!-- Header Banner -->
-            <div style="background: var(--gradient-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: var(--space-2xl) var(--space-xl); margin-bottom: var(--space-2xl); position: relative; overflow: hidden; display: flex; align-items: center; gap: var(--space-xl); min-height: 180px;">
+            <div class="trends-banner">
                 <div style="flex: 1; z-index: 1;">
-                    <h1 style="font-size: 2.8rem; font-weight: 800; letter-spacing: -1.5px; color: var(--text-primary); margin: 0 0 var(--space-xs) 0;">
+                    <h1>
                         ${t('trends_title')}
                     </h1>
-                    <p style="font-size: 1.1rem; color: var(--text-secondary); margin: 0; max-width: 600px; line-height: 1.5;">
+                    <p>
                         ${t('trends_subtitle')}
                     </p>
                 </div>

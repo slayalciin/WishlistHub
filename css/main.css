@@ -975,10 +975,15 @@ h4 {
 @media (max-width: 1024px) {
     .nav-links {
         display: none;
+        z-index: 1500;
     }
 
     .nav-hamburger {
         display: flex;
+    }
+
+    .mobile-only-actions {
+        display: flex !important;
     }
 }
 
@@ -993,7 +998,7 @@ h4 {
     }
 
     .nav-hamburger {
-        display: none;
+        display: flex !important;
     }
 
     .section {
@@ -1005,6 +1010,15 @@ h4 {
         right: var(--space-md);
         width: auto;
     }
+
+    /* Hide redundant navigation icons on mobile to avoid header overflow */
+    #create-btn,
+    #nav-auth-btn,
+    #nav-user,
+    #theme-toggle-btn,
+    #lang-toggle-btn {
+        display: none !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1014,6 +1028,13 @@ h4 {
 
     .modal-container {
         padding: var(--space-lg);
+        width: 92%;
+        margin: 0 auto;
+    }
+
+    /* Hide logo text on extremely narrow mobile viewports to prevent header crowding */
+    .logo-text {
+        display: none !important;
     }
 }
 

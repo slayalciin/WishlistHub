@@ -39,10 +39,10 @@ function renderHeroSection() {
                 <div class="hero-orb hero-orb-3"></div>
             </div>
             <div class="hero-content">
-                <h1 class="hero-title" style="font-size: 3.5rem; letter-spacing: -1px; margin-bottom: var(--space-lg);">
+                <h1 class="hero-title">
                     ${t('home_hero_title')}
                 </h1>
-                <p class="hero-description" style="font-size: 1.2rem;">
+                <p class="hero-description">
                     ${t('home_hero_desc')}
                 </p>
             </div>
@@ -174,31 +174,31 @@ function renderFeaturesSection() {
     return `
         <section class="section">
             <!-- Feature 1: Wishlist Sistemi -->
-            <div class="feature-block" onclick="navigateTo('wishlist')" style="display: flex; align-items: center; gap: var(--space-xl); margin-bottom: 100px; flex-wrap: wrap;">
-                <div style="flex: 1.2; min-width: 300px;">
-                    <h2 style="font-size: 2.8rem; line-height: 1.2; margin: 0; color: var(--text-primary);">${t('home_feature_1_title')}</h2>
+            <div class="feature-block" onclick="navigateTo('wishlist')">
+                <div class="feature-block-text">
+                    <h2>${t('home_feature_1_title')}</h2>
                 </div>
-                <div class="feature-image-container" style="flex: 1; min-width: 300px; overflow: hidden; border-radius: 30px; box-shadow: var(--shadow-lg); height: 500px;">
+                <div class="feature-image-container">
                     <img src="assets/feature_wishlist.jpg" alt="Wishlist" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
                 </div>
             </div>
 
             <!-- Feature 2: Sosyal Paylaşım & Hediyeleşme -->
-            <div class="feature-block" onclick="navigateTo('inspiration')" style="display: flex; align-items: center; gap: var(--space-xl); margin-bottom: 100px; flex-wrap: wrap-reverse;">
-                <div class="feature-image-container" style="flex: 1; min-width: 300px; overflow: hidden; border-radius: 30px; box-shadow: var(--shadow-lg); height: 500px;">
+            <div class="feature-block" onclick="navigateTo('inspiration')" style="flex-wrap: wrap-reverse;">
+                <div class="feature-image-container">
                     <img src="assets/feature_inspiration.jpg" alt="Inspiration" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;">
                 </div>
-                <div style="flex: 1.2; min-width: 300px;">
-                    <h2 style="font-size: 2.8rem; line-height: 1.2; margin: 0; color: var(--text-primary);">${t('home_feature_2_title')}</h2>
+                <div class="feature-block-text">
+                    <h2>${t('home_feature_2_title')}</h2>
                 </div>
             </div>
 
             <!-- Feature 3: Kişiselleştirme & İlham -->
-            <div class="feature-block" onclick="navigateTo('trends')" style="display: flex; align-items: center; gap: var(--space-xl); flex-wrap: wrap;">
-                <div style="flex: 1.2; min-width: 300px;">
-                    <h2 style="font-size: 2.8rem; line-height: 1.2; margin: 0; color: var(--text-primary);">${t('home_feature_3_title')}</h2>
+            <div class="feature-block" onclick="navigateTo('trends')">
+                <div class="feature-block-text">
+                    <h2>${t('home_feature_3_title')}</h2>
                 </div>
-                <div class="feature-image-container" style="flex: 1; min-width: 300px; overflow: hidden; border-radius: 30px; box-shadow: var(--shadow-lg); height: 500px;">
+                <div class="feature-image-container">
                     <img src="assets/feature_style.jpg" alt="Style" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
                 </div>
             </div>
@@ -209,12 +209,12 @@ function renderFeaturesSection() {
 function renderCTASection() {
     return `
         <section class="section" style="padding-top: 0;">
-            <div style="text-align: center; background: var(--bg-card); border-radius: 40px; padding: 80px 40px; box-shadow: var(--shadow-xl); margin-top: var(--space-xl);">
-                <h2 style="font-size: 3.5rem; margin-bottom: var(--space-md); color: var(--text-primary);">${t('home_cta_title')}</h2>
-                <p style="font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto var(--space-xl) auto;">
+            <div class="home-cta-box">
+                <h2>${t('home_cta_title')}</h2>
+                <p>
                     ${t('home_cta_desc')}
                 </p>
-                <button class="btn btn-primary btn-lg" style="font-size: 1.2rem; padding: 15px 50px; border-radius: var(--radius-full);" onclick="openAuthModal()">
+                <button class="btn btn-primary btn-lg" style="border-radius: var(--radius-full);" onclick="openAuthModal()">
                     ${t('home_cta_btn')}
                 </button>
             </div>
