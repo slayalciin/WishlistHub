@@ -859,3 +859,392 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ── ILHAM KOSESI SOCIAL FEED LAYOUT ──────────────── */
+
+.inspiration-feed-layout {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: var(--space-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+@media (max-width: 1024px) {
+    .inspiration-feed-layout {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+}
+
+/* Social Media Post Card */
+.social-post-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+    margin-bottom: var(--space-xl);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+}
+
+.social-post-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-medium);
+}
+
+/* Post Header */
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.post-user-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.post-user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.post-header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.post-author-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.post-author-handle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.post-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-left: auto;
+    align-self: flex-start;
+}
+
+/* Moodboard Collage Grid */
+.moodboard-collage {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 110px;
+    gap: var(--space-xs);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: var(--space-md);
+    background: var(--bg-secondary);
+    padding: var(--space-xs);
+}
+
+.collage-item {
+    position: relative;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.collage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.collage-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Custom Grid spans for Pinterest feel */
+.collage-item-large {
+    grid-column: span 3;
+    grid-row: span 3;
+}
+
+.collage-item-tall {
+    grid-column: span 3;
+    grid-row: span 2;
+}
+
+.collage-item-square {
+    grid-column: span 3;
+    grid-row: span 2;
+}
+
+.collage-item-wide {
+    grid-column: span 3;
+    grid-row: span 1;
+}
+
+/* Post Product Cards (Instagram Tag style) */
+.post-products-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.social-mini-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: var(--bg-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.social-mini-card:hover {
+    background: var(--bg-glass-hover);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.social-mini-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.social-mini-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.social-mini-brand {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.social-mini-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.social-mini-price {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.social-mini-save {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: var(--space-xs);
+}
+
+.social-mini-save:hover, .social-mini-save.saved {
+    color: var(--accent-pink);
+}
+
+/* Hover Preview Card */
+.hover-preview-card {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    width: 200px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-sm);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s ease;
+    pointer-events: none;
+    text-align: center;
+}
+
+.social-mini-card:hover .hover-preview-card {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Post Actions & Interactions */
+.post-actions-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    border-top: 1px solid var(--border-subtle);
+    padding-top: var(--space-md);
+    margin-top: var(--space-sm);
+}
+
+.post-action-btn {
+    background: none;
+    border: none;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    transition: color var(--transition-fast);
+    padding: 4px var(--space-xs);
+}
+
+.post-action-btn:hover {
+    color: var(--primary);
+}
+
+.post-action-btn.liked {
+    color: var(--accent-pink);
+}
+
+.post-action-btn.saved {
+    color: var(--accent-orange);
+}
+
+.post-action-btn span {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Q&A Comments Area */
+.qa-comments-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    max-height: 380px;
+    overflow-y: auto;
+}
+
+.qa-comment-item {
+    display: flex;
+    gap: var(--space-sm);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.qa-comment-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-user-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-bottom: 2px;
+}
+
+.comment-username {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.comment-time {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.comment-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin-bottom: var(--space-xs);
+}
+
+/* Dynamic Comment form */
+.comment-composer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-top: var(--space-md);
+    border-top: 1px solid var(--border-subtle);
+    padding-top: var(--space-md);
+}
+
+.comment-input-row {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.comment-textarea {
+    flex: 1;
+    padding: var(--space-sm);
+    background: var(--bg-glass);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    resize: none;
+    height: 36px;
+    transition: all 0.2s;
+}
+
+.comment-textarea:focus {
+    height: 60px;
+    border-color: var(--primary);
+}
+
+.comment-select-product {
+    padding: 6px var(--space-sm);
+    background: var(--bg-glass);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.comment-send-btn {
+    align-self: flex-end;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-full);
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+}

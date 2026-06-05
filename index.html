@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wishlist Hub - AI Destekli Sosyal İstek Listesi Platformu</title>
-    <meta name="description" content="Wishlist Hub ile farklı platformlardan beğendiğiniz ürünleri tek yerde toplayın, paylaşın ve AI destekli kişisel öneriler alın.">
+    <title data-i18n="wl_title">Wishlist Hub - Sosyal İstek Listesi Platformu</title>
+    <meta name="description" content="Wishlist Hub ile farklı platformlardan beğendiğiniz ürünleri tek yerde toplayın, paylaşın, arkadaşlarınızla paylaşın ve yeni fikirler keşfedin.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@
             <div class="splash-loader">
                 <div class="loader-bar"></div>
             </div>
-            <p class="splash-tagline">Hayallerini Listele, Paylaş, Keşfet</p>
+            <p class="splash-tagline" data-i18n="splash_tagline">Hayallerini Listele, Paylaş, Keşfet</p>
         </div>
     </div>
 
@@ -42,7 +42,7 @@
             <div class="auth-content-area">
                 <div class="auth-intro">
                     <img src="assets/logo.png" alt="Logo" class="auth-intro-logo">
-                    <p class="auth-intro-text">
+                    <p class="auth-intro-text" data-i18n="auth_intro">
                         Wishlist Hub'a giriş yaparak, kişiselleştirilmiş stil önerileri ve kombinasyonlarla alışveriş deneyiminizi bir üst seviyeye taşıyın. Gardırobunuzu dijital ortamda düzenleyin, favori ürünlerinizi takip edin ve yeni keşifler yaparak tarzınızı keşfedin. Tüm özelliklere erişmek için hemen oturum açın ve stilinize dair en iyi deneyimi yaşayın!
                     </p>
                 </div>
@@ -50,45 +50,45 @@
                 <div class="auth-forms-container">
                     <!-- Tabs -->
                     <div class="auth-minimal-tabs">
-                        <button class="auth-tab active" data-tab="login" onclick="switchAuthTab('login')">OTURUM AÇ</button>
-                        <button class="auth-tab" data-tab="register" onclick="switchAuthTab('register')">KAYIT OL</button>
+                        <button class="auth-tab active" data-tab="login" onclick="switchAuthTab('login')" data-i18n="auth_login_tab">OTURUM AÇ</button>
+                        <button class="auth-tab" data-tab="register" onclick="switchAuthTab('register')" data-i18n="auth_register_tab">KAYIT OL</button>
                     </div>
 
                     <!-- Login Form -->
                     <div id="login-form" class="auth-form-minimal">
                         <div class="form-group-minimal">
-                            <input type="email" id="login-email" placeholder="E-POSTA" class="input-minimal">
+                            <input type="email" id="login-email" placeholder="E-POSTA" class="input-minimal" data-i18n-placeholder="auth_email">
                         </div>
                         <div class="form-group-minimal">
-                            <input type="password" id="login-password" placeholder="PAROLA" class="input-minimal">
+                            <input type="password" id="login-password" placeholder="PAROLA" class="input-minimal" data-i18n-placeholder="auth_password">
                         </div>
                         <div class="auth-forgot-link">
-                            <a href="#">Şifrenizi mi unuttunuz ?</a>
+                            <a href="#" data-i18n="auth_forgot_password">Şifrenizi mi unuttunuz ?</a>
                         </div>
                         <div style="text-align: center; margin-top: var(--space-xl);">
-                            <button class="btn-minimal-outline" onclick="handleLogin()">OTURUM AÇ</button>
+                            <button class="btn-minimal-outline" onclick="handleLogin()" data-i18n="auth_login_tab">OTURUM AÇ</button>
                         </div>
                     </div>
 
                     <!-- Register Form -->
                     <div id="register-form" class="auth-form-minimal" style="display:none;">
                         <div class="form-group-minimal">
-                            <input type="text" id="reg-name" placeholder="AD SOYAD" class="input-minimal">
+                            <input type="text" id="reg-name" placeholder="AD SOYAD" class="input-minimal" data-i18n-placeholder="auth_name">
                         </div>
                         <div class="form-group-minimal">
-                            <input type="email" id="reg-email" placeholder="E-POSTA" class="input-minimal">
+                            <input type="email" id="reg-email" placeholder="E-POSTA" class="input-minimal" data-i18n-placeholder="auth_email">
                         </div>
                         <div class="form-group-minimal">
-                            <input type="password" id="reg-password" placeholder="PAROLA" class="input-minimal">
+                            <input type="password" id="reg-password" placeholder="PAROLA" class="input-minimal" data-i18n-placeholder="auth_password">
                         </div>
                         <div style="text-align: center; margin-top: var(--space-xl);">
-                            <button class="btn-minimal-outline" onclick="handleRegister()">KAYIT OL</button>
+                            <button class="btn-minimal-outline" onclick="handleRegister()" data-i18n="auth_register_tab">KAYIT OL</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="auth-footer">
-                    <a href="#">Yardım Merkezi</a>
+                    <a href="#" data-i18n="auth_help_center">Yardım Merkezi</a>
                     <div class="accessibility-icon"><i class="fas fa-universal-access"></i></div>
                 </div>
             </div>
@@ -104,19 +104,28 @@
             </div>
             <div class="nav-links" id="nav-links">
                 <a href="#" class="nav-link active" data-page="home" onclick="navigateTo('home')">
-                    <i class="fas fa-home"></i><span>Ana Sayfa</span>
+                    <i class="fas fa-home"></i><span data-i18n="nav_home">Ana Sayfa</span>
                 </a>
                 <a href="#" class="nav-link" data-page="wishlist" onclick="navigateTo('wishlist')">
-                    <i class="fas fa-heart"></i><span>Wishlist</span>
+                    <i class="fas fa-heart"></i><span data-i18n="nav_wishlist">Wishlist</span>
                 </a>
                 <a href="#" class="nav-link" data-page="trends" onclick="navigateTo('trends')">
-                    <i class="fas fa-fire"></i><span>Trendler</span>
+                    <i class="fas fa-fire"></i><span data-i18n="nav_trends">Trendler</span>
                 </a>
                 <a href="#" class="nav-link" data-page="inspiration" onclick="navigateTo('inspiration')">
-                    <i class="fas fa-lightbulb"></i><span>İlham Köşesi</span>
+                    <i class="fas fa-lightbulb"></i><span data-i18n="nav_inspiration">İlham Köşesi</span>
                 </a>
             </div>
             <div class="nav-actions">
+                <button class="nav-action-btn" id="theme-toggle-btn" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="nav-action-btn" id="lang-toggle-btn" onclick="toggleLanguage()">
+                    <span id="lang-toggle-text" style="font-size: 0.85rem; font-weight: 700;">EN</span>
+                </button>
+                <button class="nav-action-btn" id="create-btn" onclick="openCreationHub()" data-i18n-title="nav_create">
+                    <i class="fas fa-plus"></i>
+                </button>
                 <button class="nav-action-btn" id="search-btn" onclick="toggleSearch()">
                     <i class="fas fa-search"></i>
                 </button>
@@ -130,7 +139,7 @@
                     </div>
                 </div>
                 <button class="btn btn-primary btn-sm" id="nav-auth-btn" onclick="openAuthModal()">
-                    <i class="fas fa-sign-in-alt"></i> Giriş
+                    <i class="fas fa-sign-in-alt"></i> <span data-i18n="nav_login">Giriş</span>
                 </button>
                 <button class="nav-hamburger" id="hamburger-btn" onclick="toggleMobileMenu()">
                     <i class="fas fa-bars"></i>
@@ -141,7 +150,7 @@
         <div id="search-overlay" class="search-overlay" style="display:none;">
             <div class="search-container">
                 <i class="fas fa-search"></i>
-                <input type="text" placeholder="Ürün, kullanıcı veya liste ara..." id="global-search" oninput="handleGlobalSearch(this.value)">
+                <input type="text" placeholder="Ürün, kullanıcı veya liste ara..." id="global-search" oninput="handleGlobalSearch(this.value)" data-i18n-placeholder="nav_search_placeholder">
                 <button onclick="toggleSearch()"><i class="fas fa-times"></i></button>
             </div>
             <div id="search-results" class="search-results"></div>
@@ -149,8 +158,8 @@
         <!-- Notifications Panel -->
         <div id="notif-panel" class="notif-panel" style="display:none;">
             <div class="notif-header">
-                <h3>Bildirimler</h3>
-                <button onclick="clearNotifications()">Tümünü okundu yap</button>
+                <h3 data-i18n="notif_title">Bildirimler</h3>
+                <button onclick="clearNotifications()" data-i18n="notif_mark_all_read">Tümünü okundu yap</button>
             </div>
             <div id="notif-list" class="notif-list"></div>
         </div>
@@ -160,23 +169,23 @@
     <nav class="mobile-nav" id="mobile-nav">
         <a href="#" class="mobile-nav-item active" data-page="home" onclick="navigateTo('home')">
             <i class="fas fa-home"></i>
-            <span>Ana Sayfa</span>
+            <span data-i18n="nav_home">Ana Sayfa</span>
         </a>
         <a href="#" class="mobile-nav-item" data-page="wishlist" onclick="navigateTo('wishlist')">
             <i class="fas fa-heart"></i>
-            <span>Wishlist</span>
+            <span data-i18n="nav_wishlist">Wishlist</span>
         </a>
         <a href="#" class="mobile-nav-item" data-page="trends" onclick="navigateTo('trends')">
             <i class="fas fa-fire"></i>
-            <span>Trendler</span>
+            <span data-i18n="nav_trends">Trendler</span>
         </a>
         <a href="#" class="mobile-nav-item" data-page="inspiration" onclick="navigateTo('inspiration')">
             <i class="fas fa-lightbulb"></i>
-            <span>İlham</span>
+            <span data-i18n="nav_inspiration">İlham</span>
         </a>
         <a href="#" class="mobile-nav-item" data-page="profile" onclick="navigateTo('profile')">
             <i class="fas fa-user"></i>
-            <span>Profil</span>
+            <span data-i18n="nav_profile">Profil</span>
         </a>
     </nav>
 
@@ -188,8 +197,67 @@
     <!-- Toast Notifications -->
     <div id="toast-container" class="toast-container"></div>
 
+    <!-- Floating Action Button -->
+    <button class="fab-create" id="fab-create-btn" onclick="openCreationHub()">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Creation Hub Modal -->
+    <div id="creation-hub-modal" class="modal-overlay" style="display:none; align-items:center; justify-content:center;">
+        <div class="creation-hub-container" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-2xl); width: 90%; max-width: 900px; max-height: 85vh; overflow-y: auto; padding: var(--space-2xl); position: relative; box-shadow: var(--shadow-2xl);">
+            <button class="modal-close" onclick="closeCreationHub()" style="position:absolute; top:20px; right:20px; font-size:1.5rem; background:none; border:none; color:var(--text-secondary); cursor:pointer;"><i class="fas fa-times"></i></button>
+            
+            <!-- Step 1: Choice Screen -->
+            <div id="ch-choice-screen">
+                <h2 style="font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: var(--space-sm); color: var(--text-primary); letter-spacing:-1px;" data-i18n="ch_title_main">Ne oluşturmak istiyorsun?</h2>
+                <p style="text-align: center; color: var(--text-muted); margin-bottom: var(--space-2xl); font-size: 1.05rem;" data-i18n="trends_subtitle">Topluluğun en çok kaydettiği, paylaştığı ve keşfettiği parçaları incele.</p>
+                
+                <div class="grid-2" style="gap: var(--space-lg);">
+                    <!-- Card 1: Wishlist -->
+                    <div class="creation-hub-card hover-lift" onclick="showCreationForm('wishlist')" style="background: var(--gradient-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: var(--space-xl); cursor: pointer; display: flex; gap: var(--space-md); align-items: flex-start;">
+                        <span style="font-size: 2.2rem; background: var(--bg-secondary); padding: 12px; border-radius: var(--radius-lg); filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">🖤</span>
+                        <div>
+                            <h3 style="font-size: 1.2rem; font-weight: 700; margin: 0 0 6px 0;" data-i18n="ch_card_wishlist_title">Wishlist Oluştur</h3>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.45;" data-i18n="ch_card_wishlist_desc">Favori ürünlerini tek bir koleksiyonda topla ve daha sonra incelemek için kaydet.</p>
+                        </div>
+                    </div>
+                    <!-- Card 2: Moodboard -->
+                    <div class="creation-hub-card hover-lift" onclick="showCreationForm('moodboard')" style="background: var(--gradient-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: var(--space-xl); cursor: pointer; display: flex; gap: var(--space-md); align-items: flex-start;">
+                        <span style="font-size: 2.2rem; background: var(--bg-secondary); padding: 12px; border-radius: var(--radius-lg); filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">✨</span>
+                        <div>
+                            <h3 style="font-size: 1.2rem; font-weight: 700; margin: 0 0 6px 0;" data-i18n="ch_card_moodboard_title">Moodboard Oluştur</h3>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.45;" data-i18n="ch_card_moodboard_desc">Ürünleri, görselleri ve fikirleri bir araya getirerek ilham panoları oluştur.</p>
+                        </div>
+                    </div>
+                    <!-- Card 3: Inspiration Post -->
+                    <div class="creation-hub-card hover-lift" onclick="showCreationForm('post')" style="background: var(--gradient-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: var(--space-xl); cursor: pointer; display: flex; gap: var(--space-md); align-items: flex-start;">
+                        <span style="font-size: 2.2rem; background: var(--bg-secondary); padding: 12px; border-radius: var(--radius-lg); filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">📌</span>
+                        <div>
+                            <h3 style="font-size: 1.2rem; font-weight: 700; margin: 0 0 6px 0;" data-i18n="ch_card_post_title">İlham Gönderisi Paylaş</h3>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.45;" data-i18n="ch_card_post_desc">Toplulukla kombinlerini, keşiflerini ve fikirlerini paylaş.</p>
+                        </div>
+                    </div>
+                    <!-- Card 4: Collection -->
+                    <div class="creation-hub-card hover-lift" onclick="showCreationForm('collection')" style="background: var(--gradient-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: var(--space-xl); cursor: pointer; display: flex; gap: var(--space-md); align-items: flex-start;">
+                        <span style="font-size: 2.2rem; background: var(--bg-secondary); padding: 12px; border-radius: var(--radius-lg); filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">📂</span>
+                        <div>
+                            <h3 style="font-size: 1.2rem; font-weight: 700; margin: 0 0 6px 0;" data-i18n="ch_card_collection_title">Koleksiyon Oluştur</h3>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.45;" data-i18n="ch_card_collection_desc">Benzer wishlistleri ve moodboardları tek bir tema altında grupla.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 2: Form Screen -->
+            <div id="ch-form-screen" style="display:none;">
+                <div id="ch-form-content"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="js/data.js"></script>
+    <script src="js/translations.js"></script>
     <script src="js/ai-engine.js"></script>
     <script src="js/store.js"></script>
     <script src="js/components.js"></script>
@@ -198,6 +266,8 @@
     <script src="js/pages/trends.js"></script>
     <script src="js/pages/inspiration.js"></script>
     <script src="js/pages/profile.js"></script>
+    <script src="js/pages/combohub.js"></script>
+    <script src="js/pages/virtual-tryout.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

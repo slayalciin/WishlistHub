@@ -40,11 +40,10 @@ function renderHeroSection() {
             </div>
             <div class="hero-content">
                 <h1 class="hero-title" style="font-size: 3.5rem; letter-spacing: -1px; margin-bottom: var(--space-lg);">
-                    Alışverişin sınırlarını aşmayı ve farklı tarzlar yaratmayı isteyenler için
+                    ${t('home_hero_title')}
                 </h1>
                 <p class="hero-description" style="font-size: 1.2rem;">
-                    Farklı platformlardan beğendiğin ürünleri tek yerde topla, 
-                    arkadaşlarınla paylaş.
+                    ${t('home_hero_desc')}
                 </p>
             </div>
         </section>
@@ -113,7 +112,7 @@ function renderHomeSection(section) {
                     <p class="section-subtitle">${section.subtitle}</p>
                 </div>
                 <button class="btn btn-ghost btn-sm">
-                    Tümünü Gör <i class="fas fa-chevron-right"></i>
+                    ${t('comp_see_all')} <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
             ${itemsHtml}
@@ -127,11 +126,11 @@ function renderFeaturedWishlists() {
         <section class="section">
             <div class="section-header">
                 <div>
-                    <h2 class="section-title">Öne Çıkan Wishlistler ⭐</h2>
-                    <p class="section-subtitle">En beğenilen istek listeleri</p>
+                    <h2 class="section-title">${t('home_featured_wishlists')}</h2>
+                    <p class="section-subtitle">${t('tr_popular_wishlists_desc')}</p>
                 </div>
                 <button class="btn btn-ghost btn-sm" onclick="navigateTo('wishlist')">
-                    Tümünü Gör <i class="fas fa-chevron-right"></i>
+                    ${t('comp_see_all')} <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
             <div class="grid-3">
@@ -146,8 +145,8 @@ function renderPopularUsers() {
         <section class="section" style="background: var(--bg-secondary); border-radius: var(--radius-xl); padding: var(--space-3xl) var(--space-xl);">
             <div class="section-header" style="text-align: center; justify-content: center; margin-bottom: var(--space-2xl);">
                 <div style="max-width: 600px; margin: 0 auto;">
-                    <h2 class="section-title" style="font-size: 2.5rem; margin-bottom: var(--space-sm);">Stil İkonlarını Keşfet</h2>
-                    <p class="section-subtitle" style="font-size: 1.1rem;">Topluluğumuzun en çok ilham veren kullanıcılarına katılın.</p>
+                    <h2 class="section-title" style="font-size: 2.5rem; margin-bottom: var(--space-sm);">${t('home_icons_title')}</h2>
+                    <p class="section-subtitle" style="font-size: 1.1rem;">${t('home_icons_desc')}</p>
                 </div>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-xl); justify-items: center;">
@@ -156,12 +155,12 @@ function renderPopularUsers() {
                         <div style="width: 120px; height: 120px; border-radius: 50%; background: var(--bg-card); box-shadow: var(--shadow-md); overflow: hidden; display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-md); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
                             ${u.avatar ? 
                                 `<img src="${u.avatar}" alt="${u.name}" style="width: 100%; height: 100%; object-fit: cover;">` : 
-                                `<span style="font-size: 4rem;">${u.avatarEmoji}</span>`
+                                `<i class="fas fa-user" style="font-size: 3rem; color: var(--text-muted);"></i>`
                             }
                         </div>
                         <h4 style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">${u.name}</h4>
                         <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: var(--space-sm);">${u.username}</p>
-                        <button class="btn btn-secondary btn-sm" style="border-radius: var(--radius-full); padding: 6px 20px;">Takip Et</button>
+                        <button class="btn btn-secondary btn-sm" style="border-radius: var(--radius-full); padding: 6px 20px;">${t('home_follow')}</button>
                     </div>
                 `).join('')}
             </div>
@@ -177,7 +176,7 @@ function renderFeaturesSection() {
             <!-- Feature 1: Wishlist Sistemi -->
             <div class="feature-block" onclick="navigateTo('wishlist')" style="display: flex; align-items: center; gap: var(--space-xl); margin-bottom: 100px; flex-wrap: wrap;">
                 <div style="flex: 1.2; min-width: 300px;">
-                    <h2 style="font-size: 2.8rem; line-height: 1.2; margin: 0; color: var(--text-primary);">Tüm İstekleriniz Tek Bir Yerde</h2>
+                    <h2 style="font-size: 2.8rem; line-height: 1.2; margin: 0; color: var(--text-primary);">${t('home_feature_1_title')}</h2>
                 </div>
                 <div class="feature-image-container" style="flex: 1; min-width: 300px; overflow: hidden; border-radius: 30px; box-shadow: var(--shadow-lg); height: 500px;">
                     <img src="assets/feature_wishlist.jpg" alt="Wishlist" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
@@ -190,14 +189,14 @@ function renderFeaturesSection() {
                     <img src="assets/feature_inspiration.jpg" alt="Inspiration" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;">
                 </div>
                 <div style="flex: 1.2; min-width: 300px;">
-                    <h2 style="font-size: 2.8rem; line-height: 1.2; margin: 0; color: var(--text-primary);">İlham Verin, İlham Alın</h2>
+                    <h2 style="font-size: 2.8rem; line-height: 1.2; margin: 0; color: var(--text-primary);">${t('home_feature_2_title')}</h2>
                 </div>
             </div>
 
             <!-- Feature 3: Kişiselleştirme & İlham -->
             <div class="feature-block" onclick="navigateTo('trends')" style="display: flex; align-items: center; gap: var(--space-xl); flex-wrap: wrap;">
                 <div style="flex: 1.2; min-width: 300px;">
-                    <h2 style="font-size: 2.8rem; line-height: 1.2; margin: 0; color: var(--text-primary);">Stilinizi Keşfedin</h2>
+                    <h2 style="font-size: 2.8rem; line-height: 1.2; margin: 0; color: var(--text-primary);">${t('home_feature_3_title')}</h2>
                 </div>
                 <div class="feature-image-container" style="flex: 1; min-width: 300px; overflow: hidden; border-radius: 30px; box-shadow: var(--shadow-lg); height: 500px;">
                     <img src="assets/feature_style.jpg" alt="Style" style="width: 100%; height: 100%; object-fit: cover; object-position: center;">
@@ -211,12 +210,12 @@ function renderCTASection() {
     return `
         <section class="section" style="padding-top: 0;">
             <div style="text-align: center; background: var(--bg-card); border-radius: 40px; padding: 80px 40px; box-shadow: var(--shadow-xl); margin-top: var(--space-xl);">
-                <h2 style="font-size: 3.5rem; margin-bottom: var(--space-md); color: var(--text-primary);">Moda Tutkusu, 7'den 70'e Herkes İçin</h2>
+                <h2 style="font-size: 3.5rem; margin-bottom: var(--space-md); color: var(--text-primary);">${t('home_cta_title')}</h2>
                 <p style="font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto var(--space-xl) auto;">
-                    Hemen katılın ve alışveriş deneyiminizi yeniden tanımlayan bu benzersiz topluluğun bir parçası olun.
+                    ${t('home_cta_desc')}
                 </p>
                 <button class="btn btn-primary btn-lg" style="font-size: 1.2rem; padding: 15px 50px; border-radius: var(--radius-full);" onclick="openAuthModal()">
-                    Başla
+                    ${t('home_cta_btn')}
                 </button>
             </div>
         </section>
@@ -232,37 +231,37 @@ function renderFooter() {
                         <img src="assets/logo.png" alt="Logo" style="height: 24px; margin-right: 8px;">
                         Wishlist<span class="logo-highlight">Hub</span>
                     </div>
-                    <p>Hayallerini listele, paylaş ve keşfet. AI destekli kişisel öneri sistemiyle alışveriş deneyimini yeniden tanımla.</p>
+                    <p>${t('footer_desc')}</p>
                     <div class="footer-social">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/wiishlisthub?igsh=MWppZmxwYWp2d216MQ==" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://www.tiktok.com/@wiishlisthub?_r=1&_t=ZS-96W4OYA3pb8" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
                         <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 <div class="footer-col">
-                    <h4>Platform</h4>
-                    <a href="#" onclick="navigateTo('wishlist')">Wishlist</a>
-                    <a href="#" onclick="navigateTo('trends')">Trendler</a>
-                    <a href="#" onclick="navigateTo('inspiration')">İlham Köşesi</a>
+                    <h4>${t('footer_platform')}</h4>
+                    <a href="#" onclick="navigateTo('wishlist')">${t('nav_wishlist')}</a>
+                    <a href="#" onclick="navigateTo('trends')">${t('nav_trends')}</a>
+                    <a href="#" onclick="navigateTo('inspiration')">${t('nav_inspiration')}</a>
                 </div>
                 <div class="footer-col">
-                    <h4>Şirket</h4>
-                    <a href="#">Hakkımızda</a>
-                    <a href="#">Kariyer</a>
-                    <a href="#">Blog</a>
-                    <a href="#">İletişim</a>
+                    <h4>${t('footer_company')}</h4>
+                    <a href="#">${t('footer_about')}</a>
+                    <a href="#">${t('footer_careers')}</a>
+                    <a href="#">${t('footer_blog')}</a>
+                    <a href="#" onclick="event.preventDefault(); openContactModal();">${t('footer_contact')}</a>
                 </div>
                 <div class="footer-col">
-                    <h4>Destek</h4>
-                    <a href="#">SSS</a>
-                    <a href="#">Gizlilik Politikası</a>
-                    <a href="#">Kullanım Koşulları</a>
-                    <a href="#">Güvenlik</a>
+                    <h4>${t('footer_support')}</h4>
+                    <a href="#">${t('footer_faq')}</a>
+                    <a href="#">${t('footer_privacy')}</a>
+                    <a href="#">${t('footer_terms')}</a>
+                    <a href="#">${t('footer_security')}</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <span>© 2025 Wishlist Hub. Tüm hakları saklıdır.</span>
+                <span>${t('footer_rights')}</span>
                 <span>Made with ❤️ in Turkey</span>
             </div>
         </footer>

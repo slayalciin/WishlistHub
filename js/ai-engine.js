@@ -203,22 +203,23 @@ class AIEngine {
         const reasons = [];
 
         if (product.trending) {
-            reasons.push('🔥 Trend');
+            reasons.push(t('ai_reason_trend', '🔥 Trend'));
         }
 
         if (this.categoryScores[product.category] > 3) {
-            reasons.push(`✨ ${CATEGORIES.find(c => c.id === product.category)?.name || ''} ilgin`);
+            const catName = t(product.category) || CATEGORIES.find(c => c.id === product.category)?.name || '';
+            reasons.push(t('ai_reason_interest', { category: catName }));
         }
 
         if (this.brandPreferences[product.brand]) {
-            reasons.push(`❤️ ${product.brand} beğenin`);
+            reasons.push(t('ai_reason_brand', { brand: product.brand }));
         }
 
         if (product.likes > 500) {
-            reasons.push(`👥 ${formatNumber(product.likes)} beğeni`);
+            reasons.push(t('ai_reason_likes', { likes: formatNumber(product.likes) }));
         }
 
-        return reasons.slice(0, 2).join(' • ') || '⭐ Sana özel öneri';
+        return reasons.slice(0, 2).join(' • ') || t('ai_reason_special', '⭐ Sana özel öneri');
     }
 
     // Get trending products
@@ -284,9 +285,9 @@ class AIEngine {
 
     generateComboName(top, bottom, shoe) {
         const styles = [
-            'Şık & Rahat', 'Günlük Elegance', 'Sokak Stili',
-            'Business Casual', 'Weekend Vibes', 'Minimal Chic',
-            'Urban Cool', 'Boho Chic', 'Smart Casual'
+            t('combo_style_1'), t('combo_style_2'), t('combo_style_3'),
+            t('combo_style_4'), t('combo_style_5'), t('combo_style_6'),
+            t('combo_style_7'), t('combo_style_8'), t('combo_style_9')
         ];
         return styles[Math.floor(Math.random() * styles.length)];
     }
@@ -301,22 +302,22 @@ class AIEngine {
     getStyleTips() {
         const tips = {
             female: [
-                { title: 'Kapsül Gardırop', desc: 'Az parça, çok kombin prensibiyle gardırobunuzu optimize edin.', emoji: '👗' },
-                { title: 'Renk Uyumu', desc: 'Nötr tonlar + 1 accent renk = Her zaman şık görünüm.', emoji: '🎨' },
-                { title: 'Aksesuar Gücü', desc: 'Doğru aksesuar basit bir kıyafeti bile özel kılar.', emoji: '💎' },
-                { title: 'Sezon Trendi', desc: 'Bu sezon oversize silüetler ve pastel tonlar öne çıkıyor.', emoji: '🌸' },
+                { title: t('tip_female_title_1'), desc: t('tip_female_desc_1'), emoji: '👗' },
+                { title: t('tip_female_title_2'), desc: t('tip_female_desc_2'), emoji: '🎨' },
+                { title: t('tip_female_title_3'), desc: t('tip_female_desc_3'), emoji: '💎' },
+                { title: t('tip_female_title_4'), desc: t('tip_female_desc_4'), emoji: '🌸' },
             ],
             male: [
-                { title: 'Temel Parçalar', desc: 'Kaliteli temel parçalara yatırım yapın: beyaz tişört, slim jean, deri bot.', emoji: '👔' },
-                { title: 'Fit Önceliği', desc: 'Doğru bedeni bulmak, pahalı kıyafet almaktan daha önemli.', emoji: '📐' },
-                { title: 'Katmanlama', desc: 'Katmanlı giyim hem pratik hem de şık bir görünüm sağlar.', emoji: '🧥' },
-                { title: 'Monokrom Stil', desc: 'Tek renk tonlarıyla zahmetsiz şıklık yakalayın.', emoji: '🖤' },
+                { title: t('tip_male_title_1'), desc: t('tip_male_desc_1'), emoji: '👔' },
+                { title: t('tip_male_title_2'), desc: t('tip_male_desc_2'), emoji: '📐' },
+                { title: t('tip_male_title_3'), desc: t('tip_male_desc_3'), emoji: '🧥' },
+                { title: t('tip_male_title_4'), desc: t('tip_male_desc_4'), emoji: '🖤' },
             ],
             young: [
-                { title: 'Mix & Match', desc: 'High-end ve uygun fiyatlı parçaları kombinleyin.', emoji: '🔄' },
-                { title: 'Statement Parça', desc: 'Her kombinde bir dikkat çekici parça bulundurun.', emoji: '⚡' },
-                { title: 'Sneaker Kültürü', desc: 'Doğru sneaker basit bir combo\'yu bile yükseltir.', emoji: '👟' },
-                { title: 'Sürdürülebilir Moda', desc: 'Vintage ve second-hand alışveriş hem cool hem çevreci.', emoji: '♻️' },
+                { title: t('tip_young_title_1'), desc: t('tip_young_desc_1'), emoji: '🔄' },
+                { title: t('tip_young_title_2'), desc: t('tip_young_desc_2'), emoji: '⚡' },
+                { title: t('tip_young_title_3'), desc: t('tip_young_desc_3'), emoji: '👟' },
+                { title: t('tip_young_title_4'), desc: t('tip_young_desc_4'), emoji: '♻️' },
             ]
         };
 
@@ -336,7 +337,7 @@ class AIEngine {
             {
                 id: 'for-you',
                 title: 'Senin İçin Seçtik ✨',
-                subtitle: 'AI destekli kişisel öneriler',
+                subtitle: 'Kişisel öneriler',
                 type: 'products',
                 items: recommendations,
                 aiPowered: true
@@ -352,7 +353,7 @@ class AIEngine {
             {
                 id: 'style-tips',
                 title: 'Stil Önerileri 💡',
-                subtitle: 'AI destekli kişisel stil tavsiyeleri',
+                subtitle: 'Kişisel stil tavsiyeleri',
                 type: 'tips',
                 items: styleTips,
                 aiPowered: true
@@ -407,18 +408,18 @@ class AIEngine {
             const topCategory = Object.entries(this.categoryScores)
                 .sort((a, b) => b[1] - a[1])[0];
 
-            const catName = CATEGORIES.find(c => c.id === topCategory[0])?.name || '';
+            const catName = t(topCategory[0]) || CATEGORIES.find(c => c.id === topCategory[0])?.name || '';
             insights.push({
                 type: 'personal',
-                text: `En çok ${catName} kategorisine ilgi gösteriyorsun`,
+                text: t('ai_insight_personal', { category: catName }),
                 emoji: '📊'
             });
         }
 
         insights.push(
-            { type: 'trend', text: 'Bu hafta moda kategorisinde %45 artış var', emoji: '📈' },
-            { type: 'social', text: 'Takip ettiğin kişiler genellikle teknoloji ürünleri ekliyor', emoji: '👥' },
-            { type: 'tip', text: 'Wishlistine 3+ kişi göz attı!', emoji: '👀' }
+            { type: 'trend', text: t('ai_insight_trend'), emoji: '📈' },
+            { type: 'social', text: t('ai_insight_social'), emoji: '👥' },
+            { type: 'tip', text: t('ai_insight_tip'), emoji: '👀' }
         );
 
         return insights;
@@ -438,10 +439,13 @@ class AIEngine {
             .filter(p => targetUser.interests.includes(p.category))
             .sort((a, b) => b.likes - a.likes)
             .slice(0, 4)
-            .map(p => ({
-                ...p,
-                giftReason: `${targetUser.name} ${CATEGORIES.find(c => c.id === p.category)?.name} seviyor`
-            }));
+            .map(p => {
+                const catName = t(p.category) || CATEGORIES.find(c => c.id === p.category)?.name || '';
+                return {
+                    ...p,
+                    giftReason: t('ai_gift_reason', { name: targetUser.name, category: catName })
+                };
+            });
     }
 }
 

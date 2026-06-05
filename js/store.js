@@ -19,8 +19,12 @@ class Store {
             comboSlots: { top: null, bottom: null, shoes: null },
             savedCombos: [],
             searchQuery: '',
-            selectedCategory: 'all',
             wishlistView: 'grid',
+            theme: 'light',
+            language: 'tr',
+            moodboardPosts: [],
+            collections: [],
+            savedItems: { products: [], wishlists: [], posts: [] }
         };
 
         this.listeners = {};
@@ -52,8 +56,13 @@ class Store {
                 savedCombos: this.state.savedCombos,
                 wardrobeItems: this.state.wardrobeItems,
                 wishlists: this.state.wishlists,
+                theme: this.state.theme,
+                language: this.state.language,
+                moodboardPosts: this.state.moodboardPosts,
+                collections: this.state.collections,
+                savedItems: this.state.savedItems
             };
-            localStorage.setItem('wishlisthub_state_v11', JSON.stringify(saveData));
+            localStorage.setItem('wishlisthub_state_v37', JSON.stringify(saveData));
         } catch (e) {
             console.warn('Storage save failed:', e);
         }
@@ -62,18 +71,158 @@ class Store {
     // Load from localStorage
     loadFromStorage() {
         try {
-            const saved = localStorage.getItem('wishlisthub_state_v11');
+            // Default to system preferences
+            const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            this.state.theme = systemPrefersDark ? 'dark' : 'light';
+            
+            const browserLang = navigator.language || navigator.userLanguage;
+            this.state.language = (browserLang && browserLang.startsWith('tr')) ? 'tr' : 'en';
+
+            // Set up default/initial data that gets overridden by saved store
+            this.state.moodboardPosts = [
+                {
+                    id: "mb_post_good_girl",
+                    userId: "u1",
+                    author: {
+                        name: "Ayşe Yılmaz",
+                        handle: "@aysestyle",
+                        avatar: "assets/aysestyle_avatar.png",
+                        avatarEmoji: null
+                    },
+                    date: "2 saat önce",
+                    description: "Bu yılın wishlistleri",
+                    hashtags: ["#carolinaherrera", "#calvinklein", "#airpodsmax", "#styleinspo", "#chic"],
+                    productIds: ["p_good_girl_blush", "p_ck_convertible", "p_airpods_max_purple"],
+                    likes: 312,
+                    commentsCount: 18,
+                    saves: 95,
+                    liked: false,
+                    saved: false,
+                    isCustomCollage: true
+                },
+                {
+                    id: "mb_post_1",
+                    userId: "u1",
+                    author: {
+                        name: "Ayşe Yılmaz",
+                        handle: "@aysestyle",
+                        avatar: "assets/aysestyle_avatar.png",
+                        avatarEmoji: null
+                    },
+                    date: "2 saat önce",
+                    description: "Bahar aylarında soft renklerin uyumunu çok seviyorum. Deri parçalarla keten tonlarını ve modern aksesuarları eşleştirdim. Sizce nasıl olmuş?",
+                    hashtags: ["#springlook", "#pastels", "#fashionhub", "#styleinspiration"],
+                    productIds: ["p24", "p18", "p23"],
+                    likes: 142,
+                    commentsCount: 12,
+                    saves: 45,
+                    liked: false,
+                    saved: false
+                },
+                {
+                    id: "mb_post_2",
+                    userId: "u4",
+                    author: {
+                        name: "Emre Aktaş",
+                        handle: "@emrestyle",
+                        avatar: "assets/emrestyle_avatar.png",
+                        avatarEmoji: null
+                    },
+                    date: "1 gün önce",
+                    description: "Koyu tonlar ve minimalist kesimler. Günlük stilinizi ve konforunuzu zahmetsizce yükseltecek triko ve bot kombinasyonu.",
+                    hashtags: ["#mensstyle", "#minimalism", "#streetwear", "#dailylook"],
+                    productIds: ["p17", "p21", "p23"],
+                    likes: 98,
+                    commentsCount: 6,
+                    saves: 22,
+                    liked: false,
+                    saved: false
+                }
+            ];
+
+            this.state.collections = [
+                {
+                    id: "col_1",
+                    userId: "u1",
+                    name: "Summer Essentials",
+                    description: "Yaz ayları için vazgeçilmez parçalar.",
+                    coverImage: "assets/feature_style.jpg",
+                    wishlistIds: ["w1"],
+                    moodboardIds: ["mb_post_1"],
+                    postIds: []
+                },
+                {
+                    id: "col_2",
+                    userId: "u1",
+                    name: "Capsule Wardrobe",
+                    description: "Zamansız ve minimal bir dolap oluşturma rehberi.",
+                    coverImage: "assets/feature_wishlist.jpg",
+                    wishlistIds: ["w2"],
+                    moodboardIds: ["mb_post_2"],
+                    postIds: []
+                }
+            ];
+
+            this.state.savedItems = { products: [], wishlists: [], posts: [] };
+
+            const saved = localStorage.getItem('wishlisthub_state_v37');
             if (saved) {
                 const data = JSON.parse(saved);
                 if (data.currentUser) {
                     this.state.currentUser = data.currentUser;
                     this.state.isLoggedIn = true;
+                    // Update current user's avatar if it was a placeholder
+                    const updatedUser = this.state.users.find(u => u.id === data.currentUser.id);
+                    if (updatedUser) {
+                        this.state.currentUser.avatar = updatedUser.avatar;
+                    }
                 }
                 if (data.likedProducts) this.state.likedProducts = new Set(data.likedProducts);
                 if (data.likedWishlists) this.state.likedWishlists = new Set(data.likedWishlists);
                 if (data.followedUsers) this.state.followedUsers = new Set(data.followedUsers);
                 if (data.savedCombos) this.state.savedCombos = data.savedCombos;
                 if (data.wishlists) this.state.wishlists = data.wishlists;
+                if (data.theme) this.state.theme = data.theme;
+                if (data.language) this.state.language = data.language;
+                if (data.moodboardPosts) this.state.moodboardPosts = data.moodboardPosts;
+                if (data.collections) this.state.collections = data.collections;
+                if (data.savedItems) this.state.savedItems = data.savedItems;
+            }
+
+            // Sync all user avatars in loaded moodboard posts with the latest SAMPLE_USERS avatars
+            this.state.moodboardPosts.forEach(post => {
+                const user = this.state.users.find(u => u.id === post.userId);
+                if (user) {
+                    post.author.avatar = user.avatar;
+                }
+            });
+
+            // Ensure the special Carolina Herrera moodboard post is present and up to date
+            const goodGirlPost = {
+                id: "mb_post_good_girl",
+                userId: "u1",
+                author: {
+                    name: "Ayşe Yılmaz",
+                    handle: "@aysestyle",
+                    avatar: "assets/aysestyle_avatar.png",
+                    avatarEmoji: null
+                },
+                date: "2 saat önce",
+                description: "Bu yılın wishlistleri",
+                hashtags: ["#carolinaherrera", "#calvinklein", "#airpodsmax", "#styleinspo", "#chic"],
+                productIds: ["p_good_girl_blush", "p_ck_convertible", "p_airpods_max_purple"],
+                likes: 312,
+                commentsCount: 18,
+                saves: 95,
+                liked: false,
+                saved: false,
+                isCustomCollage: true
+            };
+            const goodGirlPostIndex = this.state.moodboardPosts.findIndex(p => p.id === 'mb_post_good_girl');
+            if (goodGirlPostIndex >= 0) {
+                this.state.moodboardPosts[goodGirlPostIndex] = goodGirlPost;
+            } else {
+                this.state.moodboardPosts.unshift(goodGirlPost);
             }
         } catch (e) {
             console.warn('Storage load failed:', e);
@@ -92,8 +241,155 @@ class Store {
     logout() {
         this.state.currentUser = null;
         this.state.isLoggedIn = false;
-        localStorage.removeItem('wishlisthub_state_v11');
+        localStorage.removeItem('wishlisthub_state_v37');
         this.emit('auth', { loggedIn: false });
+    }
+
+    setTheme(theme) {
+        this.state.theme = theme;
+        this.saveToStorage();
+        this.emit('themeChanged', theme);
+    }
+
+    setLanguage(language) {
+        this.state.language = language;
+        this.saveToStorage();
+        this.emit('languageChanged', language);
+    }
+
+    createWishlistExtended(title, description, coverImage = '', privacy = 'public', category = 'fashion', products = []) {
+        const newWishlist = {
+            id: 'w' + Date.now(),
+            userId: this.state.currentUser?.id || 'guest',
+            title,
+            description,
+            coverImage,
+            privacy,
+            category,
+            products: products, // array of product IDs
+            likes: 0,
+            comments: [],
+            shares: 0,
+            completedProducts: [],
+            created_at: new Date().toISOString()
+        };
+        this.state.wishlists.unshift(newWishlist);
+        this.saveToStorage();
+        this.emit('wishlistsChanged', this.state.wishlists);
+        return newWishlist;
+    }
+
+    createMoodboard(title, description, items, hashtags = []) {
+        const author = this.state.currentUser ? {
+            name: this.state.currentUser.name,
+            handle: '@' + this.state.currentUser.username,
+            avatar: this.state.currentUser.avatar || '',
+            avatarEmoji: null
+        } : {
+            name: "Guest",
+            handle: "@guest",
+            avatarEmoji: null
+        };
+        const productIds = items.filter(it => it.type === 'product').map(it => it.id);
+
+        const newMoodboard = {
+            id: 'mb_' + Date.now(),
+            userId: this.state.currentUser?.id || 'guest',
+            author,
+            date: this.state.language === 'tr' ? 'Şimdi' : 'Just now',
+            title,
+            description,
+            items, // layout items
+            productIds,
+            hashtags: hashtags.map(t => t.startsWith('#') ? t : '#' + t),
+            likes: 0,
+            commentsCount: 0,
+            saves: 0,
+            liked: false,
+            saved: false,
+            created_at: new Date().toISOString()
+        };
+        this.state.moodboardPosts.unshift(newMoodboard);
+        this.saveToStorage();
+        this.emit('moodboardsChanged', this.state.moodboardPosts);
+        return newMoodboard;
+    }
+
+    createInspirationPost(title, description, images = [], wishlistIds = [], moodboardIds = [], productIds = [], hashtags = [], topic = 'Kombin Önerisi') {
+        const author = this.state.currentUser ? {
+            name: this.state.currentUser.name,
+            handle: '@' + this.state.currentUser.username,
+            avatar: this.state.currentUser.avatar || '',
+            avatarEmoji: null
+        } : {
+            name: "Guest",
+            handle: "@guest",
+            avatarEmoji: null
+        };
+
+        const newPost = {
+            id: 'post_' + Date.now(),
+            userId: this.state.currentUser?.id || 'guest',
+            author,
+            date: this.state.language === 'tr' ? 'Şimdi' : 'Just now',
+            title,
+            description,
+            images,
+            wishlistIds,
+            moodboardIds,
+            productIds,
+            hashtags: hashtags.map(t => t.startsWith('#') ? t : '#' + t),
+            topic,
+            likes: 0,
+            comments: [],
+            saves: 0,
+            liked: false,
+            saved: false,
+            created_at: new Date().toISOString()
+        };
+        this.state.moodboardPosts.unshift(newPost); // Render in same feed
+        this.saveToStorage();
+        this.emit('postsChanged', this.state.moodboardPosts);
+        return newPost;
+    }
+
+    createCollection(name, description, coverImage = '', wishlistIds = [], moodboardIds = [], postIds = []) {
+        const newCollection = {
+            id: 'col_' + Date.now(),
+            userId: this.state.currentUser?.id || 'guest',
+            name,
+            description,
+            coverImage: coverImage || 'assets/feature_wishlist.jpg',
+            wishlistIds,
+            moodboardIds,
+            postIds,
+            created_at: new Date().toISOString()
+        };
+        this.state.collections.unshift(newCollection);
+        this.saveToStorage();
+        this.emit('collectionsChanged', this.state.collections);
+        return newCollection;
+    }
+
+    toggleSaveItem(type, itemId) {
+        if (!this.state.savedItems) {
+            this.state.savedItems = { products: [], wishlists: [], posts: [] };
+        }
+        if (!this.state.savedItems[type]) {
+            this.state.savedItems[type] = [];
+        }
+        const index = this.state.savedItems[type].indexOf(itemId);
+        let saved = false;
+        if (index >= 0) {
+            this.state.savedItems[type].splice(index, 1);
+            saved = false;
+        } else {
+            this.state.savedItems[type].push(itemId);
+            saved = true;
+        }
+        this.saveToStorage();
+        this.emit('savedItemsChanged', this.state.savedItems);
+        return saved;
     }
 
     // Wishlist operations
@@ -271,3 +567,4 @@ class Store {
 }
 
 const store = new Store();
+window.store = store;

@@ -15,24 +15,24 @@ function renderVirtualTryoutPage() {
             <div class="virtual-tryout-header">
                 <h1>
                     <i class="fas fa-tshirt" style="color: var(--accent-cyan);"></i>
-                    Sanal Deneme
+                    ${t('vt_title')}
                 </h1>
-                <p>Ürünleri satın almadan önce sanal olarak deneyin</p>
-                <span class="ai-badge" style="margin-top: var(--space-sm);"><i class="fas fa-robot"></i> AI Destekli Görsel İşleme</span>
+                <p>${t('vt_desc')}</p>
+                <span class="ai-badge" style="margin-top: var(--space-sm);"><i class="fas fa-robot"></i> ${t('vt_ai_badge')}</span>
             </div>
 
             <div class="tryout-container">
                 <!-- Left Panel - Products -->
                 <div class="tryout-panel">
                     <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: var(--space-md);">
-                        <i class="fas fa-shopping-bag"></i> Ürünler
+                        <i class="fas fa-shopping-bag"></i> ${t('vt_panel_products')}
                     </h3>
                     
                     <div class="filter-tabs" style="margin-bottom: var(--space-md);">
-                        <button class="filter-tab active" onclick="filterTryOnProducts('all', this)">Tümü</button>
-                        <button class="filter-tab" onclick="filterTryOnProducts('top', this)">Üst</button>
-                        <button class="filter-tab" onclick="filterTryOnProducts('bottom', this)">Alt</button>
-                        <button class="filter-tab" onclick="filterTryOnProducts('shoes', this)">Ayakkabı</button>
+                        <button class="filter-tab active" onclick="filterTryOnProducts('all', this)">${t('vt_filter_all')}</button>
+                        <button class="filter-tab" onclick="filterTryOnProducts('top', this)">${t('vt_filter_top')}</button>
+                        <button class="filter-tab" onclick="filterTryOnProducts('bottom', this)">${t('vt_filter_bottom')}</button>
+                        <button class="filter-tab" onclick="filterTryOnProducts('shoes', this)">${t('vt_filter_shoes')}</button>
                     </div>
 
                     <div id="tryon-products-list">
@@ -44,14 +44,14 @@ function renderVirtualTryoutPage() {
                                 </div>
                                 <div class="tryout-item-info">
                                     <h4>${item.name}</h4>
-                                    <p>${item.type === 'top' ? 'Üst Giyim' : item.type === 'bottom' ? 'Alt Giyim' : 'Ayakkabı'}</p>
+                                    <p>${item.type === 'top' ? t('ch_slot_top') : item.type === 'bottom' ? t('ch_slot_bottom') : t('ch_slot_shoes')}</p>
                                 </div>
                             </div>
                         `).join('')}
 
                         <!-- Wishlist Products -->
                         <h4 style="font-size: 0.85rem; color: var(--text-muted); margin-top: var(--space-lg); margin-bottom: var(--space-sm);">
-                            Wishlist'ten
+                            ${t('vt_from_wishlist')}
                         </h4>
                         ${tryOnProducts.slice(0, 4).map(p => `
                             <div class="tryout-item" onclick="selectTryOnProduct('${p.id}')">
@@ -93,17 +93,17 @@ function renderVirtualTryoutPage() {
                                 <i class="fas fa-camera"></i>
                             </div>
                             <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: var(--space-sm);">
-                                Fotoğrafını Yükle
+                                ${t('vt_upload_photo')}
                             </h3>
                             <p style="color: var(--text-secondary); margin-bottom: var(--space-lg); max-width: 300px;">
-                                Bir fotoğraf yükleyerek ürünleri üzerinde sanal olarak deneyebilirsin
+                                ${t('vt_upload_desc')}
                             </p>
                             <input type="file" id="photo-upload" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)">
                             <button class="btn btn-primary btn-lg" onclick="document.getElementById('photo-upload').click()">
-                                <i class="fas fa-upload"></i> Fotoğraf Yükle
+                                <i class="fas fa-upload"></i> ${t('vt_upload_photo')}
                             </button>
                             <button class="btn btn-secondary btn-lg" onclick="useDemoModel()" style="margin-top: var(--space-sm);">
-                                <i class="fas fa-user"></i> Demo Model Kullan
+                                <i class="fas fa-user"></i> ${t('vt_demo_model')}
                             </button>
                         </div>
                     `}
@@ -112,7 +112,7 @@ function renderVirtualTryoutPage() {
                 <!-- Right Panel - Selected & Preview -->
                 <div class="tryout-panel">
                     <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: var(--space-md);">
-                        <i class="fas fa-layer-group"></i> Seçilenler
+                        <i class="fas fa-layer-group"></i> ${t('vt_selected')}
                     </h3>
 
                     ${selectedTryOnItems.length > 0 ? `
@@ -137,25 +137,25 @@ function renderVirtualTryoutPage() {
                         </div>
                         
                         <button class="btn btn-secondary btn-full" onclick="clearTryOnSelection()">
-                            <i class="fas fa-undo"></i> Temizle
+                            <i class="fas fa-undo"></i> ${t('vt_clear')}
                         </button>
                     ` : `
                         <div style="text-align: center; padding: var(--space-xl); color: var(--text-muted);">
                             <i class="fas fa-arrow-left" style="font-size: 1.5rem; margin-bottom: var(--space-md);"></i>
-                            <p style="font-size: 0.85rem;">Denemek istediğin ürünleri seç</p>
+                            <p style="font-size: 0.85rem;">${t('vt_empty_selected')}</p>
                         </div>
                     `}
 
                     <!-- AI Suggestion -->
                     <div style="margin-top: var(--space-xl);">
                         <div style="display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-md);">
-                            <span class="ai-badge"><i class="fas fa-robot"></i> AI Öneri</span>
+                            <span class="ai-badge"><i class="fas fa-robot"></i> ${t('vt_ai_suggestion')}</span>
                         </div>
                         <div style="background: var(--bg-glass); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: var(--space-md);">
                             <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
                                 ${selectedTryOnItems.length > 0
-            ? '✨ Güzel seçimler! Bu kombinle sokak stilini yakalayabilirsin.'
-            : '👈 Ürün seçtikten sonra AI kombin önerileri burada görünecek.'}
+            ? t('vt_ai_success')
+            : t('vt_ai_empty')}
                             </p>
                         </div>
                     </div>
@@ -163,23 +163,23 @@ function renderVirtualTryoutPage() {
                     <!-- Combo Preview -->
                     <div style="margin-top: var(--space-lg);">
                         <h4 style="font-size: 0.9rem; font-weight: 600; margin-bottom: var(--space-md);">
-                            Kombin Önizleme
+                            ${t('vt_preview')}
                         </h4>
                         <div style="display: flex; flex-direction: column; gap: 4px;">
                             <div style="height: 80px; border: 1px dashed var(--border-medium); border-radius: var(--radius-sm); display:flex; align-items:center; justify-content:center; overflow:hidden; ${getSelectedItemForSlot('top') ? `background: ${getSelectedItemForSlot('top').color}20;` : ''}">
                                 ${getSelectedItemForSlot('top')
             ? `<span style="font-size: 2rem;">${getSelectedItemForSlot('top').emoji}</span>`
-            : '<span style="font-size: 0.7rem; color: var(--text-muted);">Üst</span>'}
+            : `<span style="font-size: 0.7rem; color: var(--text-muted);">${t('vt_filter_top')}</span>`}
                             </div>
                             <div style="height: 80px; border: 1px dashed var(--border-medium); border-radius: var(--radius-sm); display:flex; align-items:center; justify-content:center; overflow:hidden; ${getSelectedItemForSlot('bottom') ? `background: ${getSelectedItemForSlot('bottom').color}20;` : ''}">
                                 ${getSelectedItemForSlot('bottom')
             ? `<span style="font-size: 2rem;">${getSelectedItemForSlot('bottom').emoji}</span>`
-            : '<span style="font-size: 0.7rem; color: var(--text-muted);">Alt</span>'}
+            : `<span style="font-size: 0.7rem; color: var(--text-muted);">${t('vt_filter_bottom')}</span>`}
                             </div>
                             <div style="height: 80px; border: 1px dashed var(--border-medium); border-radius: var(--radius-sm); display:flex; align-items:center; justify-content:center; overflow:hidden; ${getSelectedItemForSlot('shoes') ? `background: ${getSelectedItemForSlot('shoes').color}20;` : ''}">
                                 ${getSelectedItemForSlot('shoes')
             ? `<span style="font-size: 2rem;">${getSelectedItemForSlot('shoes').emoji}</span>`
-            : '<span style="font-size: 0.7rem; color: var(--text-muted);">Ayakkabı</span>'}
+            : `<span style="font-size: 0.7rem; color: var(--text-muted);">${t('vt_filter_shoes')}</span>`}
                             </div>
                         </div>
                     </div>
@@ -213,7 +213,7 @@ function selectTryOnItem(itemId) {
 }
 
 function selectTryOnProduct(productId) {
-    showToast('Ürün denemeye eklendi! 👕', 'success');
+    showToast(t('vt_added_toast'), 'success');
 }
 
 function removeTryOnItem(itemId) {
@@ -233,7 +233,7 @@ function handlePhotoUpload(event) {
         reader.onload = function (e) {
             uploadedPhoto = e.target.result;
             renderPage('virtual-tryout');
-            showToast('Fotoğraf yüklendi! 📸', 'success');
+            showToast(t('vt_photo_uploaded'), 'success');
         };
         reader.readAsDataURL(file);
     }
@@ -270,11 +270,11 @@ function useDemoModel() {
     ctx.fillStyle = '#F8F5FF';
     ctx.font = '14px Outfit, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('Demo Model', 150, 460);
+    ctx.fillText(t('vt_demo_label'), 150, 460);
 
     uploadedPhoto = canvas.toDataURL();
     renderPage('virtual-tryout');
-    showToast('Demo model yüklendi! 🎨', 'success');
+    showToast(t('vt_demo_loaded'), 'success');
 }
 
 function filterTryOnProducts(type, btn) {
@@ -296,7 +296,7 @@ function filterTryOnProducts(type, btn) {
             </div>
             <div class="tryout-item-info">
                 <h4>${item.name}</h4>
-                <p>${item.type === 'top' ? 'Üst Giyim' : item.type === 'bottom' ? 'Alt Giyim' : 'Ayakkabı'}</p>
+                <p>${item.type === 'top' ? t('ch_slot_top') : item.type === 'bottom' ? t('ch_slot_bottom') : t('ch_slot_shoes')}</p>
             </div>
         </div>
     `).join('');

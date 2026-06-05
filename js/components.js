@@ -22,9 +22,9 @@ function renderProductCard(product, options = {}) {
             <div class="product-card-image" style="${product.image ? '' : `background: ${bgGradient};`} display:flex; align-items:center; justify-content:center; overflow:hidden;">
                 ${product.image ? 
                     `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover; ${product.imageStyle || ''}">` : 
-                    `<span style="font-size: ${compact ? '3rem' : '4rem'}; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">${product.emoji}</span>`
+                    `<i class="fas fa-shopping-bag" style="font-size: ${compact ? '3rem' : '4rem'}; color: rgba(255,255,255,0.7); filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"></i>`
                 }
-                ${product.trending ? '<span class="product-card-badge">TREND</span>' : ''}
+                ${product.trending ? `<span class="product-card-badge">${t('comp_trend')}</span>` : ''}
                 ${showActions ? `
                     <div class="product-card-actions">
                         <button class="product-card-action ${isLiked ? 'liked' : ''}" 
@@ -46,7 +46,7 @@ function renderProductCard(product, options = {}) {
                 <div class="product-card-price">${formatPrice(product.price)}</div>
                 ${product.aiScore ? `
                     <div style="margin-top:6px;">
-                        <span class="ai-badge"><i class="fas fa-robot"></i> ${product.reason || 'AI Öneri'}</span>
+                        <span class="badge" style="display: inline-flex; align-items: center; gap: var(--space-xs); padding: 4px var(--space-sm); background: var(--primary-100); border-radius: var(--radius-full); font-size: 0.7rem; font-weight: 600; color: var(--primary-light);"><i class="fas fa-magic"></i> ${product.reason ? t(product.reason) : t('comp_suggest_for_you')}</span>
                     </div>
                 ` : ''}
                 ${showMeta ? `
@@ -59,7 +59,7 @@ function renderProductCard(product, options = {}) {
                     <div style="margin-top: 8px; display: flex; gap: 6px;">
                         <button class="btn btn-sm ${isCompleted ? 'btn-primary' : 'btn-outline'}" 
                                 onclick="event.stopPropagation(); toggleComplete('${wishlistId}', '${product.id}')">
-                            <i class="fas fa-check"></i> ${isCompleted ? 'Tamamlandı' : 'Tamamla'}
+                            <i class="fas fa-check"></i> ${isCompleted ? t('comp_completed') : t('comp_complete')}
                         </button>
                         <button class="btn btn-sm btn-ghost" 
                                 onclick="event.stopPropagation(); removeFromWishlist('${wishlistId}', '${product.id}')">
@@ -88,7 +88,7 @@ function renderWishlistCard(wishlist, options = {}) {
                     <div style="${p.image ? '' : `background: ${getProductColor(i)};`} display:flex; align-items:center; justify-content:center; overflow:hidden;">
                         ${p.image ? 
                             `<img src="${p.image}" alt="${p.name}" style="width: 100%; height: 100%; object-fit: cover; ${p.imageStyle || ''}">` : 
-                            `<span style="font-size: 2rem;">${p.emoji}</span>`
+                            `<i class="fas fa-shopping-bag" style="font-size: 2rem; color: rgba(255,255,255,0.7);"></i>`
                         }
                     </div>
                 `).join('')}
@@ -102,7 +102,7 @@ function renderWishlistCard(wishlist, options = {}) {
                 </div>
                 <div class="wishlist-card-stats">
                     <span><i class="fas fa-heart ${isLiked ? 'liked' : ''}"></i> ${formatNumber(wishlist.likes)}</span>
-                    <span><i class="fas fa-box"></i> ${totalCount} ürün</span>
+                    <span><i class="fas fa-box"></i> ${t('comp_total_products', { count: totalCount })}</span>
                     ${completedCount > 0 ? `<span><i class="fas fa-check-circle" style="color: var(--accent-emerald);"></i> ${completedCount}/${totalCount}</span>` : ''}
                 </div>
                 ${showUser && user ? `
@@ -110,7 +110,7 @@ function renderWishlistCard(wishlist, options = {}) {
                         <div style="width:28px; height:28px; border-radius:50%; background: var(--primary); display:flex; align-items:center; justify-content:center; font-size: 0.85rem; overflow:hidden;">
                             ${user.avatar ? 
                                 `<img src="${user.avatar}" alt="${user.name}" style="width: 100%; height: 100%; object-fit: cover;">` : 
-                                user.avatarEmoji
+                                `<i class="fas fa-user" style="color:white; font-size:0.75rem;"></i>`
                             }
                         </div>
                         <span>${user.name}</span>
@@ -133,7 +133,7 @@ function renderUserCard(user) {
                 <div style="width:100%; height:100%; background: var(--primary); display:flex; align-items:center; justify-content:center; font-size: 2.2rem; overflow:hidden;">
                     ${user.avatar ? 
                         `<img src="${user.avatar}" alt="${user.name}" style="width: 100%; height: 100%; object-fit: cover;">` : 
-                        user.avatarEmoji
+                        `<i class="fas fa-user" style="color:white; font-size:1.5rem;"></i>`
                     }
                 </div>
             </div>
@@ -142,21 +142,21 @@ function renderUserCard(user) {
             <div class="user-card-stats">
                 <div class="user-card-stat">
                     <strong>${formatNumber(user.followers)}</strong>
-                    <span>Takipçi</span>
+                    <span>${t('pr_followers')}</span>
                 </div>
                 <div class="user-card-stat">
                     <strong>${wishlists.length}</strong>
-                    <span>Liste</span>
+                    <span>${t('pr_lists')}</span>
                 </div>
                 <div class="user-card-stat">
                     <strong>${formatNumber(user.following)}</strong>
-                    <span>Takip</span>
+                    <span>${t('pr_following')}</span>
                 </div>
             </div>
             <button class="btn ${isFollowed ? 'btn-secondary' : 'btn-primary'} btn-full btn-sm" 
                     onclick="event.stopPropagation(); handleFollow('${user.id}')">
                 <i class="fas fa-${isFollowed ? 'check' : 'user-plus'}"></i>
-                ${isFollowed ? 'Takip Ediliyor' : 'Takip Et'}
+                ${isFollowed ? t('comp_following') : t('comp_follow')}
             </button>
         </div>
     `;
@@ -170,7 +170,7 @@ function renderBlogCard(post) {
     return `
         <div class="blog-card hover-lift">
             <div class="blog-card-image" style="background: ${getProductColor(colorIdx)}; display:flex; align-items:center; justify-content:center;">
-                <span style="font-size: 4rem; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));">${post.emoji}</span>
+                <i class="fas fa-pen-nib" style="font-size: 3rem; color: rgba(255,255,255,0.8); filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));"></i>
             </div>
             <div class="blog-card-body">
                 <span class="blog-card-tag">${post.category}</span>
@@ -181,7 +181,7 @@ function renderBlogCard(post) {
                         <div style="width:28px; height:28px; border-radius:50%; background: var(--primary); display:flex; align-items:center; justify-content:center; font-size: 0.8rem; overflow:hidden;">
                             ${author?.avatar ? 
                                 `<img src="${author.avatar}" alt="${author.name}" style="width: 100%; height: 100%; object-fit: cover;">` : 
-                                (author?.avatarEmoji || '👤')
+                                `<i class="fas fa-user" style="color:white; font-size:0.75rem;"></i>`
                             }
                         </div>
                         <span>${author?.name || 'Anonim'}</span>
@@ -205,7 +205,7 @@ function renderComment(comment) {
                 <div style="width:100%; height:100%; background: var(--primary); display:flex; align-items:center; justify-content:center; font-size: 1rem; overflow:hidden;">
                     ${user?.avatar ? 
                         `<img src="${user.avatar}" alt="${user.name}" style="width: 100%; height: 100%; object-fit: cover;">` : 
-                        (user?.avatarEmoji || '👤')
+                        `<i class="fas fa-user" style="color:white; font-size:0.85rem;"></i>`
                     }
                 </div>
             </div>
@@ -217,7 +217,7 @@ function renderComment(comment) {
                 <p class="comment-text">${comment.text}</p>
                 <div class="comment-actions">
                     <span class="comment-action"><i class="fas fa-heart"></i> ${comment.likes}</span>
-                    <span class="comment-action"><i class="fas fa-reply"></i> Yanıtla</span>
+                    <span class="comment-action"><i class="fas fa-reply"></i> ${t('comp_reply')}</span>
                 </div>
             </div>
         </div>
@@ -226,13 +226,22 @@ function renderComment(comment) {
 
 // Trend Card Component
 function renderTrendCard(trend) {
+    const categoryMap = {
+        'Moda': 'fashion',
+        'Teknoloji': 'tech',
+        'Güzellik': 'beauty',
+        'Ev & Yaşam': 'home',
+        'Oyun': 'gaming',
+        'Spor': 'sports'
+    };
+    const catKey = categoryMap[trend.category] || trend.category;
     return `
         <div class="trend-card hover-lift">
             <div class="trend-card-header">
                 <span class="trend-rank">#${trend.rank}</span>
                 <div class="trend-info">
                     <div class="trend-title">${trend.name}</div>
-                    <div class="trend-category">${trend.category}</div>
+                    <div class="trend-category">${t(catKey)}</div>
                 </div>
                 <div class="trend-change ${trend.change > 0 ? 'up' : 'down'}">
                     <i class="fas fa-arrow-${trend.change > 0 ? 'up' : 'down'}"></i>
@@ -343,10 +352,15 @@ function renderStatCard(icon, iconBg, value, label) {
 }
 
 // Empty State Component
-function renderEmptyState(emoji, title, desc, actionText, actionFn) {
+function renderEmptyState(iconOrEmoji, title, desc, actionText, actionFn) {
+    // Support both FA icon names (like 'lock') and emoji strings for backward compat
+    const isEmoji = iconOrEmoji && /\p{Emoji}/u.test(iconOrEmoji);
+    const iconHtml = isEmoji
+        ? `<span style="font-size:3rem;line-height:1;">${iconOrEmoji}</span>`
+        : `<i class="fas fa-${iconOrEmoji}" style="font-size:2.5rem;color:var(--text-muted);"></i>`;
     return `
         <div class="empty-state">
-            <div class="empty-state-icon">${emoji}</div>
+            <div class="empty-state-icon">${iconHtml}</div>
             <h3 class="empty-state-title">${title}</h3>
             <p class="empty-state-desc">${desc}</p>
             ${actionText ? `<button class="btn btn-primary" onclick="${actionFn}">${actionText}</button>` : ''}

@@ -18,9 +18,9 @@ function renderComboHubPage() {
             <div class="combohub-header">
                 <h1>
                     <i class="fas fa-shirt" style="color: var(--accent-pink);"></i>
-                    ComboHub - Dijital Dolap
+                    ${t('ch_title')}
                 </h1>
-                <p>Kıyafetlerini yükle, kombinle ve AI önerileriyle ilham al</p>
+                <p>${t('ch_desc')}</p>
             </div>
 
             <div class="combo-builder">
@@ -28,22 +28,22 @@ function renderComboHubPage() {
                 <div class="combo-wardrobe">
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-md);">
                         <h3 style="font-size: 1.1rem; font-weight: 700;">
-                            <i class="fas fa-closet"></i> Dolabım
+                            <i class="fas fa-closet"></i> ${t('ch_my_wardrobe')}
                         </h3>
                         <button class="btn btn-sm btn-primary" onclick="openAddWardrobeModal()">
-                            <i class="fas fa-plus"></i> Ekle
+                            <i class="fas fa-plus"></i> ${t('ch_add')}
                         </button>
                     </div>
 
                     <div class="wardrobe-categories">
                         <button class="filter-tab ${wardrobeFilter === 'all' ? 'active' : ''}" 
-                                onclick="filterWardrobe('all')">Tümü</button>
+                                onclick="filterWardrobe('all')">${t('ch_filter_all')}</button>
                         <button class="filter-tab ${wardrobeFilter === 'top' ? 'active' : ''}" 
-                                onclick="filterWardrobe('top')">👔 Üst</button>
+                                onclick="filterWardrobe('top')">${t('ch_filter_top')}</button>
                         <button class="filter-tab ${wardrobeFilter === 'bottom' ? 'active' : ''}" 
-                                onclick="filterWardrobe('bottom')">👖 Alt</button>
+                                onclick="filterWardrobe('bottom')">${t('ch_filter_bottom')}</button>
                         <button class="filter-tab ${wardrobeFilter === 'shoes' ? 'active' : ''}" 
-                                onclick="filterWardrobe('shoes')">👟 Ayakkabı</button>
+                                onclick="filterWardrobe('shoes')">${t('ch_filter_shoes')}</button>
                     </div>
 
                     <div class="wardrobe-grid">
@@ -57,7 +57,7 @@ function renderComboHubPage() {
                              style="display:flex; align-items:center; justify-content:center; border: 2px dashed var(--border-medium);">
                             <div style="text-align: center;">
                                 <i class="fas fa-plus" style="font-size: 1.5rem; color: var(--text-muted);"></i>
-                                <p style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;">Ekle</p>
+                                <p style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;">${t('ch_add')}</p>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@ function renderComboHubPage() {
                 <!-- Combo Preview Panel -->
                 <div class="combo-preview-area">
                     <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: var(--space-lg);">
-                        <i class="fas fa-magic"></i> Kombin Oluştur
+                        <i class="fas fa-magic"></i> ${t('ch_create_combo')}
                     </h3>
 
                     <div class="combo-result">
@@ -81,7 +81,7 @@ function renderComboHubPage() {
                                         </button>
                                         <span style="position:absolute; bottom:4px; font-size: 0.65rem; color: var(--text-secondary);">${comboSlots.top.name}</span>
                                        </div>`
-            : '<div style="display:flex; flex-direction:column; align-items:center; gap:4px;"><i class="fas fa-tshirt" style="font-size: 1.5rem;"></i><span>Üst Giyim</span></div>'}
+            : `<div style="display:flex; flex-direction:column; align-items:center; gap:4px;"><i class="fas fa-tshirt" style="font-size: 1.5rem;"></i><span>${t('ch_slot_top')}</span></div>`}
                             </div>
                             
                             <!-- Bottom Slot -->
@@ -94,7 +94,7 @@ function renderComboHubPage() {
                                         </button>
                                         <span style="position:absolute; bottom:4px; font-size: 0.65rem; color: var(--text-secondary);">${comboSlots.bottom.name}</span>
                                        </div>`
-            : '<div style="display:flex; flex-direction:column; align-items:center; gap:4px;"><i class="fas fa-ruler-vertical" style="font-size: 1.5rem;"></i><span>Alt Giyim</span></div>'}
+            : `<div style="display:flex; flex-direction:column; align-items:center; gap:4px;"><i class="fas fa-ruler-vertical" style="font-size: 1.5rem;"></i><span>${t('ch_slot_bottom')}</span></div>`}
                             </div>
                             
                             <!-- Shoes Slot -->
@@ -107,7 +107,7 @@ function renderComboHubPage() {
                                         </button>
                                         <span style="position:absolute; bottom:4px; font-size: 0.65rem; color: var(--text-secondary);">${comboSlots.shoes.name}</span>
                                        </div>`
-            : '<div style="display:flex; flex-direction:column; align-items:center; gap:4px;"><i class="fas fa-shoe-prints" style="font-size: 1.5rem;"></i><span>Ayakkabı</span></div>'}
+            : `<div style="display:flex; flex-direction:column; align-items:center; gap:4px;"><i class="fas fa-shoe-prints" style="font-size: 1.5rem;"></i><span>${t('ch_slot_shoes')}</span></div>`}
                             </div>
                         </div>
 
@@ -115,7 +115,7 @@ function renderComboHubPage() {
                         <div style="display: flex; gap: var(--space-sm); margin-top: var(--space-lg); width: 100%;">
                             <button class="btn btn-primary btn-full" onclick="saveCurrentCombo()" 
                                     ${!comboSlots.top && !comboSlots.bottom && !comboSlots.shoes ? 'disabled style="opacity:0.5; pointer-events:none;"' : ''}>
-                                <i class="fas fa-save"></i> Kombini Kaydet
+                                <i class="fas fa-save"></i> ${t('ch_save_combo')}
                             </button>
                             <button class="btn btn-secondary" onclick="clearAllSlots()">
                                 <i class="fas fa-undo"></i>
@@ -130,7 +130,7 @@ function renderComboHubPage() {
                     <div class="combo-ai-suggestion">
                         <div class="combo-ai-header">
                             <span class="ai-badge"><i class="fas fa-robot"></i> AI</span>
-                            <h3>Kombin Önerileri</h3>
+                            <h3>${t('ch_ai_suggestions')}</h3>
                         </div>
                         <div class="combo-suggestions-scroll">
                             ${aiCombos.map(combo => `
@@ -153,7 +153,7 @@ function renderComboHubPage() {
                     ${savedCombos.length > 0 ? `
                         <div style="margin-top: var(--space-xl);">
                             <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: var(--space-md);">
-                                <i class="fas fa-bookmark"></i> Kayıtlı Kombinler
+                                <i class="fas fa-bookmark"></i> ${t('ch_saved_combos')}
                             </h3>
                             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--space-md);">
                                 ${savedCombos.map(combo => `
@@ -204,13 +204,13 @@ function filterWardrobe(type) {
 function saveCurrentCombo() {
     const slots = store.state.comboSlots;
     if (!slots.top && !slots.bottom && !slots.shoes) {
-        showToast('En az bir parça seçin!', 'error');
+        showToast(t('ch_select_min_items'), 'error');
         return;
     }
 
-    const name = prompt('Kombine bir isim ver:') || `Kombin ${store.state.savedCombos.length + 1}`;
+    const name = prompt(t('ch_name_prompt')) || `Kombin ${store.state.savedCombos.length + 1}`;
     store.saveCombo(name);
-    showToast('Kombin kaydedildi! 🎉', 'success');
+    showToast(t('ch_save_success'), 'success');
     renderPage('combohub');
 }
 
@@ -223,7 +223,7 @@ function randomCombo() {
     if (bottoms.length) store.setComboSlot('bottom', bottoms[Math.floor(Math.random() * bottoms.length)]);
     if (shoes.length) store.setComboSlot('shoes', shoes[Math.floor(Math.random() * shoes.length)]);
 
-    showToast('Rastgele kombin oluşturuldu! 🎲', 'success');
+    showToast(t('ch_random_success'), 'success');
     renderPage('combohub');
 }
 
@@ -234,7 +234,7 @@ function applyAICombo(itemIds) {
             store.setComboSlot(item.type, item);
         }
     });
-    showToast('AI kombini uygulandı! 🤖', 'success');
+    showToast(t('ch_ai_applied'), 'success');
     renderPage('combohub');
 }
 
@@ -242,7 +242,7 @@ function loadSavedCombo(comboId) {
     const combo = store.state.savedCombos.find(c => c.id === comboId);
     if (combo) {
         store.state.comboSlots = { ...combo.items };
-        showToast('Kombin yüklendi!', 'success');
+        showToast(t('ch_loaded'), 'success');
         renderPage('combohub');
     }
 }
@@ -257,36 +257,36 @@ function openAddWardrobeModal() {
                 <i class="fas fa-times"></i>
             </button>
             <h2 style="font-size: 1.3rem; font-weight: 700; margin-bottom: var(--space-xl);">
-                <i class="fas fa-plus-circle" style="color: var(--primary);"></i> Kıyafet Ekle
+                <i class="fas fa-plus-circle" style="color: var(--primary);"></i> ${t('ch_add_title')}
             </h2>
             <div class="form-group">
-                <label>Kıyafet Adı</label>
-                <input type="text" class="form-input" id="wardrobe-item-name" placeholder="Örn: Mavi Gömlek">
+                <label>${t('ch_name_label')}</label>
+                <input type="text" class="form-input" id="wardrobe-item-name" placeholder="${t('ch_name_placeholder')}">
             </div>
             <div class="form-group">
-                <label>Tür</label>
+                <label>${t('ch_type_label')}</label>
                 <div style="display: flex; gap: var(--space-md);">
                     <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer; font-size: 0.85rem; color: var(--text-secondary);">
-                        <input type="radio" name="wr-type" value="top" checked> 👔 Üst Giyim
+                        <input type="radio" name="wr-type" value="top" checked> 👔 ${t('ch_slot_top')}
                     </label>
                     <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer; font-size: 0.85rem; color: var(--text-secondary);">
-                        <input type="radio" name="wr-type" value="bottom"> 👖 Alt Giyim
+                        <input type="radio" name="wr-type" value="bottom"> 👖 ${t('ch_slot_bottom')}
                     </label>
                     <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer; font-size: 0.85rem; color: var(--text-secondary);">
-                        <input type="radio" name="wr-type" value="shoes"> 👟 Ayakkabı
+                        <input type="radio" name="wr-type" value="shoes"> 👟 ${t('ch_slot_shoes')}
                     </label>
                 </div>
             </div>
             <div class="form-group">
-                <label>Fotoğraf</label>
+                <label>${t('ch_photo_label')}</label>
                 <input type="file" accept="image/*" id="wardrobe-photo" class="form-input" style="padding: var(--space-sm);">
             </div>
             <div class="form-group">
-                <label>Renk</label>
+                <label>${t('ch_color_label')}</label>
                 <input type="color" id="wardrobe-color" value="#8B5CF6" class="form-input" style="height: 40px; cursor: pointer;">
             </div>
             <button class="btn btn-primary btn-full" onclick="addWardrobeItem()">
-                <i class="fas fa-check"></i> Ekle
+                <i class="fas fa-check"></i> ${t('ch_add')}
             </button>
         </div>
     `;
@@ -299,7 +299,7 @@ function addWardrobeItem() {
     const color = document.getElementById('wardrobe-color').value;
 
     if (!name) {
-        showToast('Kıyafet adı gerekli!', 'error');
+        showToast(t('ch_name_required'), 'error');
         return;
     }
 
@@ -315,6 +315,6 @@ function addWardrobeItem() {
     store.state.wardrobeItems.push(newItem);
     store.saveToStorage();
     document.getElementById('add-wardrobe-modal').remove();
-    showToast('Kıyafet dolabına eklendi! 👗', 'success');
+    showToast(t('ch_added_success'), 'success');
     renderPage('combohub');
 }
